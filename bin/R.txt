@@ -405,7 +405,6 @@ int id imageView1 0x7f09004a
 int id listMode 0x7f09000a
 int id list_item 0x7f090025
 int id login_button 0x7f090042
-int id login_edittext 0x7f09004b
 int id login_password 0x7f090041
 int id login_user 0x7f090040
 int id logo_imageview 0x7f09004e
@@ -413,7 +412,6 @@ int id middle 0x7f09001d
 int id never 0x7f090017
 int id none 0x7f09000f
 int id normal 0x7f09000b
-int id password_edittext 0x7f09004c
 int id progress_bar 0x7f09004f
 int id progress_circular 0x7f090007
 int id progress_horizontal 0x7f090008
@@ -434,6 +432,8 @@ int id showHome 0x7f090011
 int id showTitle 0x7f090012
 int id sign_up 0x7f090043
 int id sign_up_button 0x7f09004d
+int id signup_email 0x7f09004b
+int id signup_password 0x7f09004c
 int id split_action_bar 0x7f090004
 int id submit_area 0x7f09003c
 int id tabMode 0x7f09000c

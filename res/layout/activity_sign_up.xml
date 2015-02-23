@@ -6,18 +6,19 @@
     android:paddingRight="@dimen/padding_middle">
 
     <EditText
-        android:id="@+id/login_edittext"
+        android:id="@+id/signup_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/password_edittext"
+        android:layout_above="@+id/signup_password"
         android:layout_centerHorizontal="true"
         android:capitalize="none"
-        android:hint="@string/log_in"
+        android:hint="Email address"
         android:paddingBottom="@dimen/padding_middle"
-        android:singleLine="true" />
-
+        android:singleLine="true" 
+	    android:inputType="textEmailAddress"  />
+  
     <EditText
-        android:id="@+id/password_edittext"
+        android:id="@+id/signup_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -32,7 +33,7 @@
         android:id="@+id/sign_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password_edittext"
+        android:layout_below="@+id/signup_password"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
         android:text="@string/sign_up" />

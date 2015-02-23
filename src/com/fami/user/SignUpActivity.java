@@ -1,5 +1,6 @@
 package com.fami.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,8 +14,8 @@ import com.quickblox.users.model.QBUser;
 import java.util.List;
 public class SignUpActivity extends BaseActivity {
 
-    private EditText loginEditText;
-    private EditText passwordEditText;
+    private EditText signupEmail;
+    private EditText signupPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,8 @@ public class SignUpActivity extends BaseActivity {
     }
 
     private void initUI() {
-        loginEditText = (EditText) findViewById(R.id.login_edittext);
-        passwordEditText = (EditText) findViewById(R.id.password_edittext);
+        signupEmail = (EditText) findViewById(R.id.signup_email);
+        signupPassword = (EditText) findViewById(R.id.signup_password);
     }
 
     public void onClick(View view) {
@@ -36,8 +37,8 @@ public class SignUpActivity extends BaseActivity {
                 // Sign Up user
                 //
                 QBUser qbUser = new QBUser();
-                qbUser.setLogin(loginEditText.getText().toString());
-                qbUser.setPassword(passwordEditText.getText().toString());
+                qbUser.setLogin(signupEmail.getText().toString());
+                qbUser.setPassword(signupPassword.getText().toString());
                 QBUsers.signUpSignInTask(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
@@ -45,9 +46,9 @@ public class SignUpActivity extends BaseActivity {
 
                         DataHolder.getDataHolder().addQbUserToList(qbUser);
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
-                        DataHolder.getDataHolder().setSignInUserPassword(passwordEditText.getText().toString());
+                        DataHolder.getDataHolder().setSignInUserPassword(signupPassword.getText().toString());
 
-                        finish();
+                        startApp();
                     }
 
                     @Override
@@ -59,5 +60,11 @@ public class SignUpActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+	private void startApp() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

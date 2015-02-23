@@ -39,7 +39,7 @@ public class LogInActivity extends BaseActivity{
                 // Sign in application with user
                 //
                 String email = loginUser.getText().toString();
-                QBUser qbUser = new QBUser(email, loginPassword.getText().toString(), email);
+                QBUser qbUser = new QBUser(email, loginPassword.getText().toString());
                 QBUsers.signIn(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
@@ -63,9 +63,18 @@ public class LogInActivity extends BaseActivity{
                 });
 
                 break;
+            case R.id.sign_up:
+            	signUp();
+            	break;
         }
     }
-    private void startApp() {
+    
+    private void signUp() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+	}
+
+	private void startApp() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
