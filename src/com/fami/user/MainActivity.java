@@ -1,6 +1,6 @@
 package com.fami.user;
 
-import com.fami.user.R;
+import com.fami.R;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;

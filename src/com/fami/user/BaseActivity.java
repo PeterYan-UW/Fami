@@ -1,6 +1,6 @@
 package com.fami.user;
 
-import com.fami.user.R;
+import com.fami.R;
 import com.fami.user.utils.DialogUtils;
 
 import android.support.v4.app.FragmentActivity;

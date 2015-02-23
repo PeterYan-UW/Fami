@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.fami.R;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallbackImpl;

@@ -8,7 +8,7 @@ import android.widget.EditText;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
-import com.fami.user.R;
+import com.fami.R;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 

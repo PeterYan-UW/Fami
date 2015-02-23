@@ -1,6 +1,6 @@
 package com.fami.user.utils;
 
-import com.fami.user.R;
+import com.fami.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

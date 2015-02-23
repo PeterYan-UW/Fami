@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.fami.R;
+import com.fami.user.LogInActivity;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
+import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.auth.QBAuth;
@@ -28,6 +31,7 @@ public class SplashActivity extends Activity{
     public static final String AUTH_SECRET = "xx2HjfpvY9mUwRh";
     
     private Context context;
+    private QBChatService chatService;
     private ProgressBar progressBar;
 
     @Override
@@ -40,7 +44,14 @@ public class SplashActivity extends Activity{
         
         // Initialize QuickBlox application with credentials.
         //
-        QBSettings.getInstance().fastConfigInit(APP_ID, AUTH_KEY, AUTH_SECRET);
+        QBSettings.getInstance().fastConfigInit(APP_ID, AUTH_KEY, AUTH_SECRET); 
+        // Init Chat
+        //
+        QBChatService.setDebugEnabled(true);
+        if (!QBChatService.isInitialized()) {
+            QBChatService.init(this);
+        }
+        chatService = QBChatService.getInstance();
 
         // Create QuickBlox session
         //
