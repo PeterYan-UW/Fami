@@ -47,7 +47,7 @@ public class SplashActivity extends Activity{
         QBAuth.createSession(new QBEntityCallbackImpl<QBSession>() {
             @Override
             public void onSuccess(QBSession qbSession, Bundle bundle) {
-            	startApp();
+            	loginApp();
             }
 
             @Override
@@ -64,7 +64,7 @@ public class SplashActivity extends Activity{
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void startApp() {
+    private void loginApp() {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
         finish();

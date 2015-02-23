@@ -1,5 +1,6 @@
 package com.fami.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -52,7 +53,7 @@ public class LogInActivity extends BaseActivity{
                         DataHolder.getDataHolder().setSignInUserPassword(loginPassword.getText().toString());
                         DialogUtils.showLong(context, getResources().getString(R.string.user_successfully_sign_in));
                         
-                        finish();
+                        startApp();
                     }
 
                     @Override
@@ -64,5 +65,10 @@ public class LogInActivity extends BaseActivity{
 
                 break;
         }
+    }
+    private void startApp() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
