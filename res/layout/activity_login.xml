@@ -13,6 +13,7 @@
         android:layout_height="150dp"
         android:gravity="top"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/login_user"
         android:src="@drawable/fami" 
         android:contentDescription="Fami"/>
     
@@ -55,17 +56,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="5dp"
         android:text="Sign Up"
         android:textColor="#ff0000" />
     
-	<ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
 	    <requestFocus />
 

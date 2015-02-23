@@ -27,7 +27,6 @@ public class LogInActivity extends BaseActivity{
     }
 
     private void initUI() {
-        actionBar.setDisplayHomeAsUpEnabled(true);
         loginUser = (EditText) findViewById(R.id.login_user);
         loginPassword = (EditText) findViewById(R.id.login_password);
     }
