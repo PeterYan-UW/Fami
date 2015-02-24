@@ -8,7 +8,6 @@ import java.util.List;
 public class DataHolder {
 
     private static DataHolder dataHolder;
-    private List<QBUser> qbUsersList = new ArrayList<QBUser>();
     private QBUser signInQbUser;
 
     public static synchronized DataHolder getDataHolder() {
@@ -16,34 +15,6 @@ public class DataHolder {
             dataHolder = new DataHolder();
         }
         return dataHolder;
-    }
-
-    public void setQbUsersList(List<QBUser> qbUsersList) {
-        this.qbUsersList = qbUsersList;
-    }
-
-    public int getQBUserListSize() {
-        return qbUsersList.size();
-    }
-
-    public String getQBUserName(int index) {
-        return qbUsersList.get(index).getFullName();
-    }
-
-    public List<String> getQbUserTags(int index) {
-        return qbUsersList.get(index).getTags();
-    }
-
-    public QBUser getQBUser(int index) {
-        return qbUsersList.get(index);
-    }
-
-    public QBUser getLastQBUser() {
-        return qbUsersList.get(qbUsersList.size() - 1);
-    }
-
-    public void addQbUserToList(QBUser qbUser) {
-        qbUsersList.add(qbUser);
     }
 
     public QBUser getSignInQbUser() {

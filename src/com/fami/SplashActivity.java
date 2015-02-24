@@ -4,24 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.fami.R;
 import com.fami.user.LogInActivity;
-import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
-import com.quickblox.chat.QBChatService;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.model.QBSession;
-import com.quickblox.users.QBUsers;
-import com.quickblox.users.model.QBUser;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends Activity{
@@ -31,7 +23,6 @@ public class SplashActivity extends Activity{
     public static final String AUTH_SECRET = "xx2HjfpvY9mUwRh";
     
     private Context context;
-    private QBChatService chatService;
     private ProgressBar progressBar;
 
     @Override
@@ -44,14 +35,7 @@ public class SplashActivity extends Activity{
         
         // Initialize QuickBlox application with credentials.
         //
-        QBSettings.getInstance().fastConfigInit(APP_ID, AUTH_KEY, AUTH_SECRET); 
-        // Init Chat
-        //
-        QBChatService.setDebugEnabled(true);
-        if (!QBChatService.isInitialized()) {
-            QBChatService.init(this);
-        }
-        chatService = QBChatService.getInstance();
+        QBSettings.getInstance().fastConfigInit(APP_ID, AUTH_KEY, AUTH_SECRET);
 
         // Create QuickBlox session
         //

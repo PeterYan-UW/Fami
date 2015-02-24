@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
@@ -39,13 +40,13 @@ public class SignUpActivity extends BaseActivity {
                 //
                 QBUser qbUser = new QBUser();
                 qbUser.setLogin(signupEmail.getText().toString());
+                qbUser.setEmail(signupEmail.getText().toString());
                 qbUser.setPassword(signupPassword.getText().toString());
                 QBUsers.signUpSignInTask(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
                         progressDialog.hide();
 
-                        DataHolder.getDataHolder().addQbUserToList(qbUser);
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
                         DataHolder.getDataHolder().setSignInUserPassword(signupPassword.getText().toString());
 
