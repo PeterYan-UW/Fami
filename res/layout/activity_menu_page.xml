@@ -43,7 +43,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"
         android:layout_marginLeft="180dp"
-        android:background="@drawable/contacticon" />
+        android:background="@drawable/contacticon"
+        android:onClick="updatebottonclick" />
 
     <ImageButton
         android:id="@+id/imageButton6"

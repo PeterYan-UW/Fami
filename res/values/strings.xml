@@ -12,6 +12,9 @@
     <string name="dlg_cancel">Cancel</string>
     <string name="user_successfully_updated">User was successfully updated!</string>
     <string name="user_successfully_sign_in">User was successfully sign in!</string>
-	<string name="title_activity_menu">Menu</string>
-	<string name="title_activity_menu_page">MenuPage</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_menu_page">MenuPage</string>
+    <string name="title_activity_update">UpdateActivity</string>
+    <string name="update_botton">Update</string>
+
 </resources>

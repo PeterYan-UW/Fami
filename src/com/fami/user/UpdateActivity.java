@@ -1,26 +1,27 @@
 package com.fami.user;
 
 import com.fami.R;
+import com.fami.R.id;
+import com.fami.R.layout;
+import com.fami.R.menu;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class MainActivity extends ActionBarActivity{
-	
+public class UpdateActivity extends ActionBarActivity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_menu_page);
+		setContentView(R.layout.activity_update);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_page, menu);
+		getMenuInflater().inflate(R.menu.update, menu);
 		return true;
 	}
 
@@ -35,8 +36,6 @@ public class MainActivity extends ActionBarActivity{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	public void updatebottonclick(View v) {
-		Intent i = new Intent(MainActivity.this,UpdateActivity.class);
-		startActivity(i);
-	}
+	
 }
+
