@@ -58,11 +58,11 @@ public class LogInActivity extends BaseActivity{
                 progressDialog.show();
 
                 // Sign in application with user
-                //
-//                String email = loginUser.getText().toString();
-//                String password = loginPassword.getText().toString();
-                final String email = "test@test.com";
-                final String password = "123456789";
+
+                final String email = loginUser.getText().toString();
+                final String password = loginPassword.getText().toString();
+                //final String email = "e@e.com";
+                //final String password = "123456789";
                 QBUser qbUser = new QBUser(email, password, email);
                 QBUsers.signIn(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override

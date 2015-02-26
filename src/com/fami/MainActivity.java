@@ -4,6 +4,7 @@ import com.fami.R;
 import com.fami.chat.ChatActivity;
 import com.fami.chat.DialogsActivity;
 import com.fami.user.BaseActivity;
+import com.fami.user.UpdateActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,8 +26,10 @@ public class MainActivity extends BaseActivity{
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.sign_up:
-            	break;
+            case R.id.setting:
+            	Intent i = new Intent(MainActivity.this,UpdateActivity.class);
+        		startActivity(i);
+        		finish();
         }
     }
 
