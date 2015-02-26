@@ -47,9 +47,9 @@ public class BaseActivity extends FragmentActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 //    
-//    protected void fillField(TextView textView, String value) {
-//        if (!TextUtils.isEmpty(value)) {
-//            textView.setText(value);
-//        }
-//    }
+    protected void fillField(TextView textView, String value) {
+        if (!TextUtils.isEmpty(value)) {
+            textView.setText(value);
+        }
+    }
 }
