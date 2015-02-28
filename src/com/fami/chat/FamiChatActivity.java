@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.user.LogInActivity;
 
 public class FamiChatActivity extends ActionBarActivity {
 
@@ -71,9 +72,8 @@ public class FamiChatActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(FamiChatActivity.this, MainActivity.class);
+        Intent i = new Intent(FamiChatActivity.this, LogInActivity.class);
         startActivity(i);
         finish();
-
     }
 }
