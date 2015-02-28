@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quickblox.chat.model.QBChatMessage;
-import com.fami.ApplicationSingleton;
 import com.fami.R;
+import com.fami.user.helper.ApplicationSingleton;
 import com.quickblox.users.model.QBUser;
 
 import java.util.List;

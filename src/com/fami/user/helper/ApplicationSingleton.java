@@ -1,4 +1,4 @@
-package com.fami;
+package com.fami.user.helper;
 
 import android.app.Application;
 

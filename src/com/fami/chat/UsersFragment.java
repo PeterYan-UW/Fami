@@ -10,13 +10,20 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.fami.ApplicationSingleton;
+import com.fami.Family;
+import com.fami.MainActivity;
+import com.fami.ModifyUserTags;
 import com.fami.R;
+import com.fami.user.helper.ApplicationSingleton;
+import com.fami.user.helper.DataHolder;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.core.request.QBPagedRequestBuilder;
+import com.quickblox.customobjects.QBCustomObjects;
+import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.chat.model.QBDialogType;
@@ -59,21 +66,13 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
                 //
                 QBDialog dialogToCreate = new QBDialog();
                 dialogToCreate.setName(usersListToChatName());
-                if(usersAdapter.getSelected().size() == 1){
-                    dialogToCreate.setType(QBDialogType.PRIVATE);
-                }else {
-                    dialogToCreate.setType(QBDialogType.GROUP);
-                }
+                dialogToCreate.setType(QBDialogType.GROUP);
                 dialogToCreate.setOccupantsIds(getUserIds(usersAdapter.getSelected()));
 
                 QBChatService.getInstance().getGroupChatManager().createDialog(dialogToCreate, new QBEntityCallbackImpl<QBDialog>() {
                     @Override
                     public void onSuccess(QBDialog dialog, Bundle args) {
-                        if(usersAdapter.getSelected().size() == 1){
-                            startSingleChat(dialog);
-                        } else {
-                            startGroupChat(dialog);
-                        }
+                    	updateUserFami(dialog.getDialogId());
                     }
 
                     @Override
@@ -114,7 +113,12 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
 
         // save users
         //
-        users.addAll(newUsers);
+    	for (int i = 0; i < newUsers.size(); i++){
+    		if (newUsers.get(i).getTags().contains("UnFami")){
+    			users.add(newUsers.get(i));
+    		}
+    	}
+    	users.remove(DataHolder.getDataHolder().getSignInQbUser());
 
         // Prepare users list for simple adapter.
         //
@@ -147,23 +151,44 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         return chatName;
     }
 
-    public void startSingleChat(QBDialog dialog) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ChatActivity.EXTRA_MODE, ChatActivity.Mode.PRIVATE);
-        bundle.putSerializable(ChatActivity.EXTRA_DIALOG, dialog);
+    private void updateUserFami(final String dialogId){
+        QBUser qbUser = DataHolder.getDataHolder().getSignInQbUser();
+        final ArrayList<Integer> memberIDs = getUserIds(usersAdapter.getSelected());
+        memberIDs.add(qbUser.getId());
+    	QBCustomObject family = new QBCustomObject();
+    	family.putString("dialog_id", dialogId);
+    	family.putArray("member_id", memberIDs);
+    	family.setClassName("Fami");
+    	QBCustomObjects.createObject(family, new QBEntityCallbackImpl<QBCustomObject>() {
+    	    @Override
+    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+    	    	Family family = new Family();
+    	    	DataHolder.getDataHolder().setFamily(family);
+    	    	DataHolder.getDataHolder().setChatRoom(dialogId);
+    	    	DataHolder.getDataHolder().setMenmber(memberIDs);
+    	    	QBUser qbUser = new QBUser();
+    	    	StringifyArrayList<String> tagList = ModifyUserTags.updateFami(qbUser.getTags(), "Fami");
+                qbUser.setTags(tagList);
+                QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
+                    @Override
+                    public void onSuccess(QBUser qbUser, Bundle bundle) {
+                    	MainActivity.start(getActivity(), bundle);
+                    }
+                    @Override
+                    public void onError(List<String> strings) {
 
-        ChatActivity.start(getActivity(), bundle);
-    }
+                    }
+                });
+    	    }
+    	 
+    	    @Override
+    	    public void onError(List<String> errors) {
+    	 
+    	    }
+    	});
+	}
 
-    private void startGroupChat(QBDialog dialog){
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ChatActivity.EXTRA_DIALOG, dialog);
-        bundle.putSerializable(ChatActivity.EXTRA_MODE, ChatActivity.Mode.GROUP);
-
-        ChatActivity.start(getActivity(), bundle);
-    }
-
-    private void loadNextPage() {
+	private void loadNextPage() {
         ++currentPage;
 
         QBUsers.getUsers(getQBPagedRequestBuilder(currentPage), UsersFragment.this);

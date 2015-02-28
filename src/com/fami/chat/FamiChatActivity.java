@@ -12,9 +12,10 @@ import android.support.v7.app.ActionBarActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fami.MainActivity;
 import com.fami.R;
 
-public class NewDialogActivity extends ActionBarActivity {
+public class FamiChatActivity extends ActionBarActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
@@ -70,7 +71,7 @@ public class NewDialogActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(NewDialogActivity.this, DialogsActivity.class);
+        Intent i = new Intent(FamiChatActivity.this, MainActivity.class);
         startActivity(i);
         finish();
 

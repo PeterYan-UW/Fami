@@ -15,14 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.fami.ApplicationSingleton;
 import com.fami.R;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.core.request.QBRequestGetBuilder;
-
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 
@@ -34,7 +32,6 @@ public class ChatActivity extends Activity {
 
     private static final String TAG = ChatActivity.class.getSimpleName();
 
-    public static final String EXTRA_MODE = "mode";
     public static final String EXTRA_DIALOG = "dialog";
     private final String PROPERTY_SAVE_TO_HISTORY = "save_to_history";
 
@@ -43,7 +40,6 @@ public class ChatActivity extends Activity {
     private Button sendButton;
     private ProgressBar progressBar;
 
-    private Mode mode = Mode.PRIVATE;
     private ChatManager chat;
     private ChatAdapter adapter;
     private QBDialog dialog;
@@ -87,48 +83,31 @@ public class ChatActivity extends Activity {
 
         // Get chat dialog
         //
+
         dialog = (QBDialog)intent.getSerializableExtra(EXTRA_DIALOG);
+        chat = new ChatManager(this);
+        container.removeView(meLabel);
+        container.removeView(companionLabel);
 
-        mode = (Mode) intent.getSerializableExtra(EXTRA_MODE);
-        switch (mode) {
-            case GROUP:
-                chat = new GroupChatManagerImpl(this);
-                container.removeView(meLabel);
-                container.removeView(companionLabel);
+        // Join group chat
+        //
+        progressBar.setVisibility(View.VISIBLE);
+        //
+        ((ChatManager) chat).joinGroupChat(dialog, new QBEntityCallbackImpl() {
+            @Override
+            public void onSuccess() {
 
-                // Join group chat
-                //
-                progressBar.setVisibility(View.VISIBLE);
-                //
-                ((GroupChatManagerImpl) chat).joinGroupChat(dialog, new QBEntityCallbackImpl() {
-                    @Override
-                    public void onSuccess() {
-
-                        // Load Chat history
-                        //
-                        loadChatHistory();
-                    }
-
-                    @Override
-                    public void onError(List list) {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(ChatActivity.this);
-                        dialog.setMessage("error when join group chat: " + list.toString()).create().show();
-                    }
-                });
-
-                break;
-            case PRIVATE:
-                Integer opponentID = ((ApplicationSingleton)getApplication()).getOpponentIDForPrivateDialog(dialog);
-
-                chat = new PrivateChatManagerImpl(this, opponentID);
-
-                companionLabel.setText(((ApplicationSingleton)getApplication()).getDialogsUsers().get(opponentID).getLogin());
-
-                // Load CHat history
+                // Load Chat history
                 //
                 loadChatHistory();
-                break;
-        }
+            }
+
+            @Override
+            public void onError(List list) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ChatActivity.this);
+                dialog.setMessage("error when join group chat: " + list.toString()).create().show();
+            }
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,10 +133,6 @@ public class ChatActivity extends Activity {
                 }
 
                 messageEditText.setText("");
-
-                if(mode == Mode.PRIVATE) {
-                    showMessage(chatMessage);
-                }
             }
         });
     }
@@ -207,5 +182,4 @@ public class ChatActivity extends Activity {
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
 
-    public static enum Mode {PRIVATE, GROUP}
 }

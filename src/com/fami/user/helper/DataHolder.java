@@ -1,5 +1,6 @@
 package com.fami.user.helper;
 
+import com.fami.Family;
 import com.quickblox.users.model.QBUser;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class DataHolder {
 
     private static DataHolder dataHolder;
     private QBUser signInQbUser;
+    private Family family;
 
     public static synchronized DataHolder getDataHolder() {
         if (dataHolder == null) {
@@ -64,5 +66,28 @@ public class DataHolder {
             return "";
         }
     }
+    
+	public void setChatRoom(String chatRoom){
+		family.setChatRoom(chatRoom);
+	}
+	
+	public void setMenmber(ArrayList<Integer> memberId){
+		family.setMemberId(memberId);
+	}
+	public String getChatRoom(){
+		return family.getChatRoom();
+	}
+	
+	public ArrayList<Integer> getMenmber(){
+		return family.getMemberId();
+	}
+
+	public void setFamily(Family family) {
+        this.family = family;
+	}
+	
+	public Family getFamily() {
+        return this.family;
+	}
 }
 

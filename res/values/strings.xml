@@ -17,5 +17,7 @@
     <string name="title_activity_menu_page">MenuPage</string>
     <string name="title_activity_update">UpdateActivity</string>
     <string name="update_botton">Update</string>
+    <string name="create_fami">Create Fami</string>
+    <string name="title_activity_search_user">SearchUserActivity</string>
 
 </resources>

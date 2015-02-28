@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.fami.BaseActivity;
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
@@ -42,6 +44,9 @@ public class SignUpActivity extends BaseActivity {
                 qbUser.setLogin(signupEmail.getText().toString());
                 qbUser.setEmail(signupEmail.getText().toString());
                 qbUser.setPassword(signupPassword.getText().toString());
+                StringifyArrayList<String> tags = new StringifyArrayList<String>();
+                tags.add("UnFami");
+				qbUser.setTags(tags);
                 QBUsers.signUpSignInTask(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
@@ -50,7 +55,7 @@ public class SignUpActivity extends BaseActivity {
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
                         DataHolder.getDataHolder().setSignInUserPassword(signupPassword.getText().toString());
 
-                        startApp();
+                        createFami();
                     }
 
                     @Override
@@ -64,8 +69,8 @@ public class SignUpActivity extends BaseActivity {
         }
     }
 
-	private void startApp() {
-        Intent intent = new Intent(this, MainActivity.class);
+	private void createFami() {
+        Intent intent = new Intent(this, CreateFami.class);
         startActivity(intent);
         finish();
     }

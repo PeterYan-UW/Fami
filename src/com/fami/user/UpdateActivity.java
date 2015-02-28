@@ -2,7 +2,9 @@ package com.fami.user;
 
 import java.util.List;
 
+import com.fami.BaseActivity;
 import com.fami.MainActivity;
+import com.fami.ModifyUserTags;
 import com.fami.R;
 import com.fami.R.id;
 import com.fami.R.layout;
@@ -138,7 +140,7 @@ public class UpdateActivity extends BaseActivity {
     }
 
     public void update_button_onClick(View view) {
-        switch (view.getId()) {
+		switch (view.getId()) {
             case R.id.update_button:
                 progressDialog.show();
 
@@ -160,10 +162,7 @@ public class UpdateActivity extends BaseActivity {
                 qbUser.setEmail(emailEditText.getText().toString());
                 qbUser.setPhone(phoneEditText.getText().toString());
                 qbUser.setWebsite(webSiteEditText.getText().toString());
-                StringifyArrayList<String> tagList = new StringifyArrayList<String>();
-                for (String tag : tagsEditText.getText().toString().toString().split(",")) {
-                    tagList.add(tag);
-                }
+                StringifyArrayList<String> tagList = ModifyUserTags.addRole(qbUser.getTags(), tagsEditText.getText().toString());
                 qbUser.setTags(tagList);
                 
                 QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {

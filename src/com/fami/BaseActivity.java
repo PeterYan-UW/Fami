@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami;
 
 import com.fami.R;
 import com.fami.user.utils.DialogUtils;
