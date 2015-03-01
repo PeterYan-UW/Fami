@@ -29,13 +29,14 @@
         android:onClick="onClick"/>
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/todilist"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"
         android:layout_marginLeft="46dp"
         android:background="@drawable/checklisticon" />
+    	android:onClick="Ontodolist"/>
 
     <ImageButton
         android:id="@+id/setting"
