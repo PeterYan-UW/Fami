@@ -20,17 +20,23 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.QBRoster;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.chat.model.QBDialogType;
+import com.quickblox.chat.model.QBPresence;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
+import com.quickblox.chat.listeners.QBRosterListener;
+import com.quickblox.chat.listeners.QBSubscriptionListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class UsersFragment extends Fragment implements QBEntityCallback<ArrayList<QBUser>> {
@@ -67,7 +73,9 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
                 QBDialog dialogToCreate = new QBDialog();
                 dialogToCreate.setName(usersListToChatName());
                 dialogToCreate.setType(QBDialogType.GROUP);
-                dialogToCreate.setOccupantsIds(getUserIds(usersAdapter.getSelected()));
+                ArrayList<Integer> occupantsUsers = getUserIds(usersAdapter.getSelected());
+                occupantsUsers.add(DataHolder.getDataHolder().getSignInUserId());
+                dialogToCreate.setOccupantsIds(occupantsUsers);
 
                 QBChatService.getInstance().getGroupChatManager().createDialog(dialogToCreate, new QBEntityCallbackImpl<QBDialog>() {
                     @Override
@@ -166,9 +174,11 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
     	    	DataHolder.getDataHolder().setFamily(family);
     	    	DataHolder.getDataHolder().setChatRoom(dialogId);
     	    	DataHolder.getDataHolder().setMenmber(memberIDs);
-    	    	QBUser qbUser = new QBUser();
+    	    	QBUser qbUser = DataHolder.getDataHolder().getSignInQbUser();
     	    	StringifyArrayList<String> tagList = ModifyUserTags.updateFami(qbUser.getTags(), "Fami");
-                qbUser.setTags(tagList);
+    	    	
+    	    	qbUser.setTags(tagList);
+
                 QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {

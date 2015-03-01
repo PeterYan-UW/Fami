@@ -44,7 +44,7 @@ public class ModifyUserTags {
 	}
 	
 	public static StringifyArrayList<String> updateFami(StringifyArrayList<String> tags, String new_fami){
-		if (new_fami == "UnFami"){
+		if (new_fami == "Fami"){
 			tags.remove("UnFami");
 		}
 		else{
