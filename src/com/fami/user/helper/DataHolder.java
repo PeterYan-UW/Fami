@@ -4,7 +4,6 @@ import com.fami.Family;
 import com.quickblox.users.model.QBUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataHolder {
 
@@ -90,4 +89,5 @@ public class DataHolder {
         return this.family;
 	}
 }
+
 
