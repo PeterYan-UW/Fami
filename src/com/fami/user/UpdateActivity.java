@@ -19,6 +19,7 @@ import com.quickblox.users.model.QBUser;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,7 +109,6 @@ public class UpdateActivity extends BaseActivity {
     private EditText fullNameEditText;
     private EditText phoneEditText;
     private EditText webSiteEditText;
-    private EditText tagsEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
@@ -127,7 +127,6 @@ public class UpdateActivity extends BaseActivity {
         fullNameEditText = (EditText) findViewById(R.id.nametext);
         phoneEditText = (EditText) findViewById(R.id.phonetext);
         webSiteEditText = (EditText) findViewById(R.id.websitetext);
-        tagsEditText = (EditText) findViewById(R.id.tagtext);
     }
 
     private void fillAllFields() {
@@ -136,7 +135,7 @@ public class UpdateActivity extends BaseActivity {
         fillField(fullNameEditText, DataHolder.getDataHolder().getSignInUserFullName());
         fillField(phoneEditText, DataHolder.getDataHolder().getSignInUserPhone());
         fillField(webSiteEditText, DataHolder.getDataHolder().getSignInUserWebSite());
-        fillField(tagsEditText, DataHolder.getDataHolder().getSignInUserTags());
+        fillField(passwordEditText, DataHolder.getDataHolder().getSignInQbUser().getOldPassword());
     }
 
     public void update_button_onClick(View view) {
@@ -162,18 +161,16 @@ public class UpdateActivity extends BaseActivity {
                 qbUser.setEmail(emailEditText.getText().toString());
                 qbUser.setPhone(phoneEditText.getText().toString());
                 qbUser.setWebsite(webSiteEditText.getText().toString());
-                StringifyArrayList<String> tagList = ModifyUserTags.addRole(qbUser.getTags(), tagsEditText.getText().toString());
-                qbUser.setTags(tagList);
                 
                 QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
                     	progressDialog.hide();
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
-//                        if (!passwordEditText.equals("")) {
-//                            DataHolder.getDataHolder().setSignInUserPassword(
-//                                    passwordEditText.getText().toString());
-//                        }
+                        if (!passwordEditText.equals("")) {
+                            DataHolder.getDataHolder().setSignInUserPassword(
+                                    passwordEditText.getText().toString());
+                        }
                         DialogUtils.showLong(context, getResources().getString(
                                 R.string.user_successfully_updated));
                         startApp();
