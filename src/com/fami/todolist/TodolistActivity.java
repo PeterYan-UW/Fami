@@ -12,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+
+import com.fami.R;
 import com.fami.todolist.TaskContract;
 import com.fami.todolist.TaskDBHelper;
 
@@ -22,10 +24,10 @@ public class TodolistActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.todolist);
 		updateUI();
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu,menu);
@@ -46,7 +48,7 @@ public class TodolistActivity extends ListActivity {
 					public void onClick(DialogInterface dialogInterface, int i) {
 						String task = inputField.getText().toString();
 
-						helper = new TaskDBHelper(MainActivity.this);
+						helper = new TaskDBHelper(TodolistActivity.this);
 						SQLiteDatabase db = helper.getWritableDatabase();
 						ContentValues values = new ContentValues();
 

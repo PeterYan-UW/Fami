@@ -54,23 +54,17 @@ public class MainActivity extends BaseActivity{
         		startActivity(enter_setting);
         		finish();
                 break;
+            case R.id.todolist:
+                progressDialog.show();
+                Intent intent = new Intent(this, TodolistActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.sign_up:
+            	break;
         }
     }
 	
-	
-
-	public static void Ontodolist(View view) {
-		switch (view.getId()) {
-        case R.id.todolist:
-            progressDialog.show();
-            Intent intent = new Intent(this, TodolistActivity.class);
-            startActivity(intent);
-            finish();
-            break;
-        case R.id.sign_up:
-        	break;
-		}
-	}
 	public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtras(bundle);
