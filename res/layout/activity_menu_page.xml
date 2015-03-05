@@ -35,8 +35,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="300dp"
         android:layout_marginLeft="46dp"
-        android:background="@drawable/checklisticon" />
-    	android:onClick="Ontodolist"/>
+        android:background="@drawable/checklisticon"
+    	android:onClick="onClick"/>
 
     <ImageButton
         android:id="@+id/setting"

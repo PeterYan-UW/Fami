@@ -1,30 +1,33 @@
 package com.fami.todolist;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.todolist.TaskContract;
 import com.fami.todolist.TaskDBHelper;
 
-public class TodolistActivity extends ListActivity {
+public class TodolistActivity extends Activity {
 	private ListAdapter listAdapter;
 	private TaskDBHelper helper;
+	private ListView todo_list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.todolist);
+		todo_list = (ListView) findViewById(R.id.todolist_list);
 		updateUI();
 	}
 	
@@ -85,8 +88,7 @@ public class TodolistActivity extends ListActivity {
 				new int[]{R.id.taskTextView},
 				0
 		);
-
-		this.setListAdapter(listAdapter);
+		todo_list.setAdapter(listAdapter);
 	}
 
 	public void onDoneButtonClick(View view) {
@@ -104,5 +106,11 @@ public class TodolistActivity extends ListActivity {
 		SQLiteDatabase sqlDB = helper.getWritableDatabase();
 		sqlDB.execSQL(sql);
 		updateUI();
+	}
+	
+	public void onBackPressed(){
+		Intent main = new Intent(this, MainActivity.class);
+		startActivity(main);
+		finish();
 	}
 }
