@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fami.R;
 import com.fami.chat.ChatActivity;
+import com.fami.todolist.TodolistActivity;
 import com.fami.user.UpdateActivity;
 import com.fami.user.helper.DataHolder;
 import com.quickblox.chat.QBChatService;
@@ -53,9 +54,17 @@ public class MainActivity extends BaseActivity{
         		startActivity(enter_setting);
         		finish();
                 break;
+            case R.id.todolist:
+                progressDialog.show();
+                Intent intent = new Intent(this, TodolistActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.sign_up:
+            	break;
         }
     }
-
+	
 	public static void start(Context context, Bundle bundle) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtras(bundle);
