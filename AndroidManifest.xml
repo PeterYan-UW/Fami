@@ -56,12 +56,13 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".user.UpdateActivity"
-            android:label="@string/title_activity_update" >
-        </activity>
+            android:label="@string/title_activity_update" />
         <activity
             android:name="com.fami.user.SearchUserActivity"
-            android:label="@string/title_activity_search_user" >
-        </activity>
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".todolist.TodolistActivity"
+            android:label="@string/title_activity_search_user" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
