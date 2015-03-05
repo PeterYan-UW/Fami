@@ -104,7 +104,9 @@ public class UpdateActivity extends BaseActivity {
 //		}
 //}
 	private EditText loginEditText;
-    private EditText passwordEditText;
+    private EditText oldpasswordEditText;
+    private EditText newpasswordEditText;
+    private EditText confirmpasswordEditText;
     private EditText emailEditText;
     private EditText fullNameEditText;
     private EditText phoneEditText;
@@ -122,7 +124,9 @@ public class UpdateActivity extends BaseActivity {
     private void initUI() {
         
         loginEditText = (EditText) findViewById(R.id.emailtext);
-        passwordEditText = (EditText) findViewById(R.id.passwordtext);
+        oldpasswordEditText = (EditText) findViewById(R.id.oldpasswordtext);
+        newpasswordEditText = (EditText) findViewById(R.id.newpasswordtext);
+        confirmpasswordEditText = (EditText) findViewById(R.id.confirmpasswordtext);
         emailEditText = (EditText) findViewById(R.id.emailtext);
         fullNameEditText = (EditText) findViewById(R.id.nametext);
         phoneEditText = (EditText) findViewById(R.id.phonetext);
@@ -135,7 +139,7 @@ public class UpdateActivity extends BaseActivity {
         fillField(fullNameEditText, DataHolder.getDataHolder().getSignInUserFullName());
         fillField(phoneEditText, DataHolder.getDataHolder().getSignInUserPhone());
         fillField(webSiteEditText, DataHolder.getDataHolder().getSignInUserWebSite());
-        fillField(passwordEditText, DataHolder.getDataHolder().getSignInQbUser().getOldPassword());
+        //fillField(oldpasswordEditText, DataHolder.getDataHolder().getSignInQbUser().getOldPassword());
     }
 
     public void update_button_onClick(View view) {
@@ -153,9 +157,24 @@ public class UpdateActivity extends BaseActivity {
                 if (!DataHolder.getDataHolder().getSignInUserLogin().equals(loginEditText.getText().toString())) {
                     qbUser.setLogin(loginEditText.getText().toString());
                 }
-                if (!passwordEditText.getText().toString().equals("")) {
-                    qbUser.setPassword(passwordEditText.getText().toString());
-                    qbUser.setOldPassword(DataHolder.getDataHolder().getSignInUserOldPassword());
+                
+
+                
+                if (!oldpasswordEditText.getText().toString().equals("")) {
+                	if (!oldpasswordEditText.getText().toString().equals(DataHolder.getDataHolder().getSignInUserOldPassword())) {
+                		DialogUtils.showLong(context, getResources().getString(
+                                R.string.password_was_incorrect));
+                		progressDialog.hide();
+                		break;
+                	}
+                	if (!newpasswordEditText.getText().toString().equals(confirmpasswordEditText.getText().toString())) {
+                		DialogUtils.showLong(context, getResources().getString(
+                                R.string.password_not_match));
+                		progressDialog.hide();
+                		break;
+                	}
+                    qbUser.setPassword(newpasswordEditText.getText().toString());
+                    qbUser.setOldPassword(oldpasswordEditText.getText().toString());
                 }
                 qbUser.setFullName(fullNameEditText.getText().toString());
                 qbUser.setEmail(emailEditText.getText().toString());
@@ -167,10 +186,6 @@ public class UpdateActivity extends BaseActivity {
                     public void onSuccess(QBUser qbUser, Bundle bundle) {
                     	progressDialog.hide();
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
-                        if (!passwordEditText.equals("")) {
-                            DataHolder.getDataHolder().setSignInUserPassword(
-                                    passwordEditText.getText().toString());
-                        }
                         DialogUtils.showLong(context, getResources().getString(
                                 R.string.user_successfully_updated));
                         startApp();

@@ -19,5 +19,6 @@
     <string name="update_botton">Update</string>
     <string name="create_fami">Create Fami</string>
     <string name="title_activity_search_user">SearchUserActivity</string>
-    
+    <string name="password_not_match">You must enter the same password twice</string>
+    <string name="password_was_incorrect">Password was incorrect</string>
 </resources>
