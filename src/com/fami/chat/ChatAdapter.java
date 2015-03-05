@@ -12,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quickblox.chat.model.QBChatMessage;
+import com.quickblox.core.exception.QBResponseException;
 import com.fami.R;
 import com.fami.user.helper.ApplicationSingleton;
+import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
 import java.util.List;
@@ -70,7 +72,13 @@ public class ChatAdapter extends BaseAdapter {
         setAlignment(holder, isOutgoing);
         holder.txtMessage.setText(chatMessage.getBody());
         if (chatMessage.getSenderId() != null) {
-            holder.txtInfo.setText(chatMessage.getSenderId() + ": " + getTimeText(chatMessage));
+        	
+        	holder.txtInfo.setText(chatMessage.getSenderId() + ": " + getTimeText(chatMessage));
+            
+            
+            
+            
+            
         } else {
             holder.txtInfo.setText(getTimeText(chatMessage));
         }
@@ -145,4 +153,5 @@ public class ChatAdapter extends BaseAdapter {
         public LinearLayout content;
         public LinearLayout contentWithBG;
     }
+
 }

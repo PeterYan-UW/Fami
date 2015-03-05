@@ -19,17 +19,7 @@
         android:text="Name: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/update_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="100dp"
-        android:text="Password: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+
     <TextView
         android:id="@+id/update_email"
         android:layout_width="wrap_content"
@@ -37,10 +27,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="26dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="80dp"
         android:text="Email: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+
     <TextView
         android:id="@+id/update_phone"
         android:layout_width="wrap_content"
@@ -48,10 +38,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="26dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="140dp"
         android:text="Phone: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+
     <TextView
         android:id="@+id/update_website"
         android:layout_width="wrap_content"
@@ -59,64 +49,115 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="26dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="200dp"
         android:text="Website: "
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-	<EditText
-	    android:id="@+id/nametext"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/update_name"
-	    android:layout_marginLeft="28dp"
-	    android:layout_toRightOf="@+id/update_password"
-	    android:ems="10" 
-	    android:inputType="text">
+    <EditText
+        android:id="@+id/nametext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/update_name"
+        android:layout_toRightOf="@+id/new_password"
+        android:ems="10"
+        android:inputType="text" >
+    </EditText>
 
-	</EditText>
+    
 
-	<EditText
-	    android:id="@+id/passwordtext"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/update_password"
-	    android:layout_alignLeft="@+id/nametext"
-	    android:ems="10" 
-	    android:inputType="textPassword">
+    <EditText
+        android:id="@+id/emailtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/update_email"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="textEmailAddress" >
+    </EditText>
 
-	</EditText>
-	
-	<EditText
-	    android:id="@+id/emailtext"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/update_email"
-	    android:layout_alignLeft="@+id/nametext"
-	    android:ems="10" 
-	    android:inputType="textEmailAddress">
+    <EditText
+        android:id="@+id/phonetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/update_phone"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="phone" >
+    </EditText>
 
-	</EditText>
-	
-	<EditText
-	    android:id="@+id/phonetext"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/update_phone"
-	    android:layout_alignLeft="@+id/nametext"
-	    android:ems="10" 
-	    android:inputType="phone">
+    <EditText
+        android:id="@+id/websitetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/update_website"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/old_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="270dp"
+        android:text="Password: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <EditText
+        android:id="@+id/oldpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/old_password"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="textPassword" >
+    </EditText>
+    
+    <TextView
+        android:id="@+id/new_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="330dp"
+        android:text="New Password: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <EditText
+        android:id="@+id/newpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/new_password"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="textPassword" >
+    </EditText>
+    
+    <TextView
+        android:id="@+id/confirm_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="390dp"
+        android:text="Confirm: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <EditText
+        android:id="@+id/confirmpasswordtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/confirm_password"
+        android:layout_alignLeft="@+id/nametext"
+        android:ems="10"
+        android:inputType="textPassword" >
+    </EditText>
 
-	</EditText>
-
-	<EditText
-	    android:id="@+id/websitetext"
-	   android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/update_website"
-	    android:layout_alignLeft="@+id/nametext"
-	    android:ems="10"
-	    android:inputType="text" />
-	<Button
+    <Button
         android:id="@+id/update_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,4 +165,13 @@
         android:layout_centerInParent="true"
         android:onClick="update_button_onClick"
         android:text="@string/update_botton" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/update_website"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray" />
+
 </RelativeLayout>
