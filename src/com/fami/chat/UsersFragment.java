@@ -3,6 +3,7 @@ package com.fami.chat;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.ProgressBar;
 
 import com.fami.Family;
 import com.fami.MainActivity;
-import com.fami.ModifyUserTags;
 import com.fami.R;
 import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
@@ -20,21 +20,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.exception.QBResponseException;
-import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.core.request.QBPagedRequestBuilder;
+import com.quickblox.core.request.QBRequestGetBuilder;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.chat.QBChatService;
-import com.quickblox.chat.QBRoster;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.chat.model.QBDialogType;
-import com.quickblox.chat.model.QBPresence;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
-import com.quickblox.chat.listeners.QBRosterListener;
-import com.quickblox.chat.listeners.QBSubscriptionListener;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,6 +45,7 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
 
     private int currentPage = 0;
     private List<QBUser> users = new ArrayList<QBUser>();
+    private ArrayList<Integer> Famied_users_id = new ArrayList<Integer>();
 
     public static UsersFragment getInstance() {
         return new UsersFragment();
@@ -62,6 +57,7 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         usersList = (PullToRefreshListView) v.findViewById(R.id.usersList);
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         createChatButton = (Button) v.findViewById(R.id.createChatButton);
+    	getAllFamiedUser();
         createChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,10 +118,11 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         // save users
         //
     	for (int i = 0; i < newUsers.size(); i++){
-    		if (newUsers.get(i).getTags().contains("UnFami")){
-    			users.add(newUsers.get(i));
-    		}
+	    	if (!Famied_users_id.contains(newUsers.get(i).getId().toString())){
+				users.add(newUsers.get(i));
+			}
     	}
+    	Log.v("users", users.toString());
     	users.remove(DataHolder.getDataHolder().getSignInQbUser());
 
         // Prepare users list for simple adapter.
@@ -138,7 +135,27 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         progressBar.setVisibility(View.GONE);
     }
 
-    @Override
+    private void getAllFamiedUser() {
+    	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+		QBCustomObjects.getObjects("Fami", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
+		    @SuppressWarnings("unchecked")
+			@Override
+		    public void onSuccess(ArrayList<QBCustomObject> customObjects, Bundle params) {
+		    	ArrayList<Integer> Famied_ids = new ArrayList<Integer>();
+		    	for (QBCustomObject fami : customObjects){
+		    		Famied_ids.addAll((Collection<? extends Integer>) fami.getFields().get("member_id"));
+		    	}
+		    	setFamiedUsers(Famied_ids);
+		    }
+
+			@Override
+		    public void onError(List<String> errors) {
+		    	Log.v("test", errors.get(0));
+		    }
+		});
+	}
+
+	@Override
     public void onSuccess(){
 
     }
@@ -175,9 +192,6 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
     	    	DataHolder.getDataHolder().setChatRoom(dialogId);
     	    	DataHolder.getDataHolder().setMenmber(memberIDs);
     	    	QBUser qbUser = DataHolder.getDataHolder().getSignInQbUser();
-    	    	StringifyArrayList<String> tagList = ModifyUserTags.updateFami(qbUser.getTags(), "Fami");
-    	    	
-    	    	qbUser.setTags(tagList);
 
                 QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
@@ -212,5 +226,8 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         return ids;
     }
 
+    private void setFamiedUsers(ArrayList<Integer> famied_ids) {
+		this.Famied_users_id = famied_ids;	
+	}
 
 }

@@ -44,9 +44,9 @@ public class SignUpActivity extends BaseActivity {
                 qbUser.setLogin(signupEmail.getText().toString());
                 qbUser.setEmail(signupEmail.getText().toString());
                 qbUser.setPassword(signupPassword.getText().toString());
-                StringifyArrayList<String> tags = new StringifyArrayList<String>();
-                tags.add("UnFami");
-				qbUser.setTags(tags);
+//              StringifyArrayList<String> tags = new StringifyArrayList<String>();
+//              tags.add("UnFami");
+//				qbUser.setTags(tags);
                 QBUsers.signUpSignInTask(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {

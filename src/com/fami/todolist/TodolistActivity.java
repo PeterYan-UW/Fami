@@ -1,5 +1,7 @@
 package com.fami.todolist;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -17,6 +19,7 @@ import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.todolist.TaskContract;
 import com.fami.todolist.TaskDBHelper;
+import com.quickblox.customobjects.model.QBCustomObject;
 
 public class TodolistActivity extends Activity {
 	private ListAdapter listAdapter;
@@ -79,7 +82,8 @@ public class TodolistActivity extends Activity {
 		Cursor cursor = sqlDB.query(TaskContract.TABLE,
 				new String[]{TaskContract.Columns._ID, TaskContract.Columns.TASK},
 				null, null, null, null, null);
-
+//		ArrayList<String> items = new ArrayList<String>();
+//		listAdapter = new ListAdapter(this, android.R.layout.taskTextView, items);
 		listAdapter = new SimpleCursorAdapter(
 				this,
 				R.layout.task_view,
