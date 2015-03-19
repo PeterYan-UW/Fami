@@ -1,6 +1,8 @@
 package com.fami.todolist;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,20 +12,26 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
+import com.fami.Family;
 import com.fami.MainActivity;
 import com.fami.R;
-import com.fami.todolist.TaskContract;
-import com.fami.todolist.TaskDBHelper;
+import com.fami.user.helper.DataHolder;
+import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.request.QBRequestGetBuilder;
+import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 
-public class TodolistActivity extends Activity {
-	private ListAdapter listAdapter;
-	private TaskDBHelper helper;
+public class TodolistActivity extends FragmentActivity {
+	private TodoAdapter todoAdapter;
 	private ListView todo_list;
 
 	@Override
@@ -54,15 +62,22 @@ public class TodolistActivity extends Activity {
 					public void onClick(DialogInterface dialogInterface, int i) {
 						String task = inputField.getText().toString();
 
-						helper = new TaskDBHelper(TodolistActivity.this);
-						SQLiteDatabase db = helper.getWritableDatabase();
-						ContentValues values = new ContentValues();
-
-						values.clear();
-						values.put(TaskContract.Columns.TASK,task);
-
-						db.insertWithOnConflict(TaskContract.TABLE,null,values,SQLiteDatabase.CONFLICT_IGNORE);
-						updateUI();
+						QBCustomObject todo_item = new QBCustomObject();
+						todo_item.putString("to_do", task);
+						todo_item.putInteger("owner", DataHolder.getDataHolder().getSignInUserId());
+						todo_item.putBoolean("done", false);
+						todo_item.setClassName("Todo");
+						QBCustomObjects.createObject(todo_item, new QBEntityCallbackImpl<QBCustomObject>() {
+				    	    @Override
+				    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+				    	    	updateUI();
+				    	    }
+				    	 
+				    	    @Override
+				    	    public void onError(List<String> errors) {
+				    	 
+				    	    }
+				    	});
 					}
 				});
 
@@ -77,22 +92,26 @@ public class TodolistActivity extends Activity {
 	}
 
 	private void updateUI() {
-		helper = new TaskDBHelper(TodolistActivity.this);
-		SQLiteDatabase sqlDB = helper.getReadableDatabase();
-		Cursor cursor = sqlDB.query(TaskContract.TABLE,
-				new String[]{TaskContract.Columns._ID, TaskContract.Columns.TASK},
-				null, null, null, null, null);
-//		ArrayList<String> items = new ArrayList<String>();
-//		listAdapter = new ListAdapter(this, android.R.layout.taskTextView, items);
-		listAdapter = new SimpleCursorAdapter(
-				this,
-				R.layout.task_view,
-				cursor,
-				new String[]{TaskContract.Columns.TASK},
-				new int[]{R.id.taskTextView},
-				0
-		);
-		todo_list.setAdapter(listAdapter);
+    	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+    	requestBuilder.eq("owner", DataHolder.getDataHolder().getSignInUserId());
+		QBCustomObjects.getObjects("Todo", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
+		    @SuppressWarnings("unchecked")
+			@Override
+		    public void onSuccess(ArrayList<QBCustomObject> customObjects, Bundle params) {
+		    	setTodoAdapter(customObjects);
+				todo_list.setAdapter(todoAdapter);
+		    }
+
+			@Override
+		    public void onError(List<String> errors) {
+		    	Log.v("test", errors.get(0));
+		    }
+		});
+	}
+
+	protected void setTodoAdapter(ArrayList<QBCustomObject> customObjects) {
+		this.todoAdapter=new TodoAdapter(customObjects, getApplicationContext());
+		
 	}
 
 	public void onDoneButtonClick(View view) {
@@ -100,15 +119,6 @@ public class TodolistActivity extends Activity {
 		TextView taskTextView = (TextView) v.findViewById(R.id.taskTextView);
 		String task = taskTextView.getText().toString();
 
-		String sql = String.format("DELETE FROM %s WHERE %s = '%s'",
-						TaskContract.TABLE,
-						TaskContract.Columns.TASK,
-						task);
-
-
-		helper = new TaskDBHelper(TodolistActivity.this);
-		SQLiteDatabase sqlDB = helper.getWritableDatabase();
-		sqlDB.execSQL(sql);
 		updateUI();
 	}
 	

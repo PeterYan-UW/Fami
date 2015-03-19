@@ -155,11 +155,6 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
 		});
 	}
 
-	@Override
-    public void onSuccess(){
-
-    }
-
     @Override
     public void onError(List<String> errors){
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -228,6 +223,12 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
 
     private void setFamiedUsers(ArrayList<Integer> famied_ids) {
 		this.Famied_users_id = famied_ids;	
+	}
+
+	@Override
+	public void onSuccess() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
