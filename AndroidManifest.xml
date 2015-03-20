@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.fami.user.helper.ApplicationSingleton"
+        android:name=".user.helper.ApplicationSingleton"
         android:allowBackup="true"
         android:icon="@drawable/fami"
         android:label="@string/app_name"
@@ -58,11 +58,23 @@
             android:name=".user.UpdateActivity"
             android:label="@string/title_activity_update" />
         <activity
-            android:name="com.fami.user.SearchUserActivity"
+            android:name=".user.SearchUserActivity"
             android:label="@string/title_activity_search_user" />
         <activity
             android:name=".todolist.TodolistActivity"
             android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".photo.activities.GalleryActivity"
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".photo.activities.ShowImageActivity"
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".photo.activities.PhotoSplash"
+            android:label="@string/title_activity_search_user" />
+        <activity android:name=".setting.UserInfo" >
+        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fami.R;
 import com.fami.chat.ChatActivity;
+import com.fami.photo.activities.GalleryActivity;
 import com.fami.todolist.TodolistActivity;
 import com.fami.user.UpdateActivity;
 import com.fami.user.helper.DataHolder;
@@ -62,6 +63,11 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.sign_up:
             	break;
+            case R.id.album:
+            	progressDialog.show();
+            	startGalleryActivity();
+            	finish();
+                break;
         }
     }
 	
@@ -71,7 +77,11 @@ public class MainActivity extends BaseActivity{
         context.startActivity(intent);
 		
 	}
-
+	private void startGalleryActivity() {
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
+        finish();
+    }
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.
