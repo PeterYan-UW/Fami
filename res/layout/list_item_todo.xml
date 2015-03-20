@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/todoTask"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="20dp"
+            android:layout_toLeftOf="@+id/doneButton"
+            android:layout_alignBottom="@+id/doneButton"
+            android:gravity="center_vertical"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:id="@+id/done_task"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+        	android:onClick="onDoneButtonClick" />
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take"
+            android:id="@+id/take_task"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 
     <TextView
-        android:id="@+id/todoTask"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/button1"
+        android:id="@+id/taskID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/todoTask"
-        android:text="Button" />
+        android:layout_alignBottom="@+id/todoTask"
+        android:layout_toRightOf="@+id/todoTask"
+        android:text="Small Text"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-</LinearLayout>
+</RelativeLayout>

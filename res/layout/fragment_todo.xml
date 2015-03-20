@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="27dip"
+        android:orientation="horizontal" >
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="27dip" >
+
+            <Button
+                android:id="@+id/todolist"
+                android:layout_width="70dip"
+                android:layout_height="27dip"
+                android:layout_weight="2"
+                android:background="#888888"
+                android:text="To do" 
+                android:onClick="todoMenuClick"/>
+
+            <Button
+                android:id="@+id/donelist"
+                android:layout_width="70dip"
+                android:layout_height="27dip"
+                android:layout_weight="2"
+                android:background="#888888"
+                android:text="Done" 
+                android:onClick="todoMenuClick"/>
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="35dip"
+                android:layout_height="27dip"
+                android:layout_weight="0.1"
+                android:background="#888888"
+                android:text="+"
+                android:onClick="todoMenuClick" />
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/todolist_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add"
+        android:layout_margin="5dp"
+        android:drawSelectorOnTop="true" >
+
+    </ListView>
+    <ListView
+        android:id="@+id/todolist_done"
+        android:layout_width="match_parent"
+        android:layout_height="502dp"
+        android:layout_margin="5dp"
+        android:layout_above="@+id/add"
+        android:drawSelectorOnTop="true" >
+    </ListView>
+
+</LinearLayout>

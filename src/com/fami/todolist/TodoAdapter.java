@@ -1,12 +1,12 @@
 package com.fami.todolist;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.fami.R;
 import com.quickblox.customobjects.model.QBCustomObject;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +18,13 @@ public class TodoAdapter extends BaseAdapter {
 
     private List<QBCustomObject> dataSource;
     private LayoutInflater inflater;
+    private String currentUser;
+    private String currentMode;
     
-    public TodoAdapter(List<QBCustomObject> dataSource, Context ctx) {
+    public TodoAdapter(List<QBCustomObject> dataSource, String currentUser, Context ctx) {
         this.dataSource = dataSource;
         this.inflater = LayoutInflater.from(ctx);
+        this.currentUser = currentUser;
     }
     
 	@Override
@@ -46,7 +49,9 @@ public class TodoAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item_todo, null);
             holder = new ViewHolder();
             holder.task = (TextView) convertView.findViewById(R.id.todoTask);
-            holder.done = (Button) convertView.findViewById(R.id.button1);
+            holder.task_id = (TextView) convertView.findViewById(R.id.taskID);
+            holder.done_btn = (Button) convertView.findViewById(R.id.done_task);
+            holder.take_btn = (Button) convertView.findViewById(R.id.take_task);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -54,22 +59,23 @@ public class TodoAdapter extends BaseAdapter {
         final QBCustomObject task = dataSource.get(position);
         if (task != null) {
             holder.task.setText(task.getFields().get("to_do").toString());
-            holder.done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                	DoneTask(task);
-                }
-            });
+            holder.task_id.setText(Integer.toString(position));
+            if (currentUser.equals("self")){
+                holder.done_btn.setVisibility(View.VISIBLE);
+                holder.take_btn.setVisibility(View.INVISIBLE);
+            }
+            else{
+                holder.done_btn.setVisibility(View.INVISIBLE);
+                holder.take_btn.setVisibility(View.VISIBLE);           	
+            }
         }
         return convertView;
     }
 	
-    protected void DoneTask(QBCustomObject task) {
-		HashMap<String, Object> fields = new HashMap<String, Object>();
-	}
-
 	private static class ViewHolder {
         TextView task;
-        Button done;
+        TextView task_id;
+        Button done_btn;
+        Button take_btn;
     }
 }

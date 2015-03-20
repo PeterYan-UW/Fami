@@ -1,16 +1,12 @@
 package com.fami.todolist;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -19,27 +15,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 
-import com.fami.Family;
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.user.helper.DataHolder;
+import com.quickblox.core.QBCallback;
+import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.request.QBRequestGetBuilder;
+import com.quickblox.core.request.QBRequestUpdateBuilder;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
-import com.quickblox.users.QBUsers;
-import com.quickblox.users.model.QBUser;
 
 public class TodolistActivity extends FragmentActivity {
+    private String currentUser = "self";
+    private String currentMode = "todo";
 	private TodoAdapter todoAdapter;
 	private ListView todo_list;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.todolist);
-		todo_list = (ListView) findViewById(R.id.todolist_list);
-		updateUI();
+		setContentView(R.layout.fragment_todo);
+		todo_list = (ListView) findViewById(R.id.todolist_todo);
+		updateUI(currentMode);
 	}
 	
 	@Override
@@ -70,7 +68,7 @@ public class TodolistActivity extends FragmentActivity {
 						QBCustomObjects.createObject(todo_item, new QBEntityCallbackImpl<QBCustomObject>() {
 				    	    @Override
 				    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
-				    	    	updateUI();
+				    	    	updateUI(currentMode);
 				    	    }
 				    	 
 				    	    @Override
@@ -91,9 +89,17 @@ public class TodolistActivity extends FragmentActivity {
 		}
 	}
 
-	private void updateUI() {
+	private void updateUI(String Mode) {
+		Boolean status = false;
+		if (Mode.equals("todo")){
+			status = false;
+		}
+		else{
+			status = true;
+		}
     	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
     	requestBuilder.eq("owner", DataHolder.getDataHolder().getSignInUserId());
+    	requestBuilder.eq("done", status);
 		QBCustomObjects.getObjects("Todo", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
 		    @SuppressWarnings("unchecked")
 			@Override
@@ -110,21 +116,54 @@ public class TodolistActivity extends FragmentActivity {
 	}
 
 	protected void setTodoAdapter(ArrayList<QBCustomObject> customObjects) {
-		this.todoAdapter=new TodoAdapter(customObjects, getApplicationContext());
-		
+		this.todoAdapter=new TodoAdapter(customObjects, currentUser, this);
 	}
 
 	public void onDoneButtonClick(View view) {
 		View v = (View) view.getParent();
-		TextView taskTextView = (TextView) v.findViewById(R.id.taskTextView);
-		String task = taskTextView.getText().toString();
-
-		updateUI();
+		TextView taskTextView = (TextView) v.findViewById(R.id.taskID);
+		String task_position = taskTextView.getText().toString();
+		QBCustomObject task = (QBCustomObject) todoAdapter.getItem(Integer.parseInt(task_position));
+		HashMap<String, Object> fields = task.getFields();
+		fields.remove("done");
+		fields.put("done", true);		
+		task.setFields(fields);
+    	Log.v("before update", "before update");
+		QBCustomObjects.updateObject(task, new QBEntityCallbackImpl<QBCustomObject>() {
+    	    @Override
+    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+    	    	updateUI(currentMode);
+    	    }
+    	 
+    	    @Override
+    	    public void onError(List<String> errors) {
+    	 
+    	    }
+    	});
 	}
 	
+	public void onTakeButtonClick(View view) {
+		updateUI(currentMode);
+	}
 	public void onBackPressed(){
 		Intent main = new Intent(this, MainActivity.class);
 		startActivity(main);
 		finish();
 	}
+	
+	public void todoMenuClick(View view) {
+        switch (view.getId()) {
+            case R.id.todolist:
+            	currentMode = "todo";
+            	updateUI(currentMode);
+                break;
+            case R.id.donelist:
+            	currentMode = "done";
+            	updateUI(currentMode);
+                break;
+            case R.id.add:
+                break;
+        }
+    	
+    }
 }
