@@ -29,83 +29,29 @@ import com.quickblox.customobjects.model.QBCustomObject;
 public class TodolistActivity extends FragmentActivity {
     private String currentUser = "self";
     private String currentMode = "todo";
-	private TodoAdapter todoAdapter;
 	private ListView todo_list;
+	private TodoAdapter todoAdapter;
+	private ListView done_list;
+	private TodoAdapter doneAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_todo);
 		todo_list = (ListView) findViewById(R.id.todolist_todo);
+		done_list = (ListView) findViewById(R.id.todolist_done);
+    	done_list.setVisibility(View.INVISIBLE);
 		updateUI(currentMode);
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu,menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.action_add_task:
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("Add a task");
-				builder.setMessage("What do you want to do?");
-				final EditText inputField = new EditText(this);
-				builder.setView(inputField);
-				builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialogInterface, int i) {
-						String task = inputField.getText().toString();
-
-						QBCustomObject todo_item = new QBCustomObject();
-						todo_item.putString("to_do", task);
-						todo_item.putInteger("owner", DataHolder.getDataHolder().getSignInUserId());
-						todo_item.putBoolean("done", false);
-						todo_item.setClassName("Todo");
-						QBCustomObjects.createObject(todo_item, new QBEntityCallbackImpl<QBCustomObject>() {
-				    	    @Override
-				    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
-				    	    	updateUI(currentMode);
-				    	    }
-				    	 
-				    	    @Override
-				    	    public void onError(List<String> errors) {
-				    	 
-				    	    }
-				    	});
-					}
-				});
-
-				builder.setNegativeButton("Cancel",null);
-
-				builder.create().show();
-				return true;
-
-			default:
-				return false;
-		}
 	}
 
 	private void updateUI(String Mode) {
-		Boolean status = false;
-		if (Mode.equals("todo")){
-			status = false;
-		}
-		else{
-			status = true;
-		}
     	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
     	requestBuilder.eq("owner", DataHolder.getDataHolder().getSignInUserId());
-    	requestBuilder.eq("done", status);
 		QBCustomObjects.getObjects("Todo", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
 		    @SuppressWarnings("unchecked")
 			@Override
 		    public void onSuccess(ArrayList<QBCustomObject> customObjects, Bundle params) {
 		    	setTodoAdapter(customObjects);
-				todo_list.setAdapter(todoAdapter);
 		    }
 
 			@Override
@@ -114,9 +60,22 @@ public class TodolistActivity extends FragmentActivity {
 		    }
 		});
 	}
-
+	
 	protected void setTodoAdapter(ArrayList<QBCustomObject> customObjects) {
-		this.todoAdapter=new TodoAdapter(customObjects, currentUser, this);
+		ArrayList<QBCustomObject> todo_item = new ArrayList<QBCustomObject>();
+		ArrayList<QBCustomObject> done_item = new ArrayList<QBCustomObject>();
+		for (QBCustomObject item : customObjects){
+			if (item.getFields().get("done").equals("true")){
+				done_item.add(item);
+			}
+			else{
+				todo_item.add(item);
+			}
+		}
+		this.todoAdapter=new TodoAdapter(todo_item, currentUser, "todo", this);
+		this.doneAdapter=new TodoAdapter(done_item, currentUser, "done", this);
+		todo_list.setAdapter(todoAdapter);
+		done_list.setAdapter(doneAdapter);
 	}
 
 	public void onDoneButtonClick(View view) {
@@ -128,7 +87,6 @@ public class TodolistActivity extends FragmentActivity {
 		fields.remove("done");
 		fields.put("done", true);		
 		task.setFields(fields);
-    	Log.v("before update", "before update");
 		QBCustomObjects.updateObject(task, new QBEntityCallbackImpl<QBCustomObject>() {
     	    @Override
     	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
@@ -145,6 +103,7 @@ public class TodolistActivity extends FragmentActivity {
 	public void onTakeButtonClick(View view) {
 		updateUI(currentMode);
 	}
+	
 	public void onBackPressed(){
 		Intent main = new Intent(this, MainActivity.class);
 		startActivity(main);
@@ -155,13 +114,47 @@ public class TodolistActivity extends FragmentActivity {
         switch (view.getId()) {
             case R.id.todolist:
             	currentMode = "todo";
-            	updateUI(currentMode);
+            	todo_list.setVisibility(View.VISIBLE);
+            	done_list.setVisibility(View.INVISIBLE);
                 break;
             case R.id.donelist:
             	currentMode = "done";
-            	updateUI(currentMode);
+            	done_list.setVisibility(View.VISIBLE);
+            	todo_list.setVisibility(View.INVISIBLE);
                 break;
             case R.id.add:
+        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        		builder.setTitle("Add a task");
+        		builder.setMessage("What do you want to do?");
+        		final EditText inputField = new EditText(this);
+        		builder.setView(inputField);
+        		builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        			@Override
+        			public void onClick(DialogInterface dialogInterface, int i) {
+        				String task = inputField.getText().toString();
+
+        				QBCustomObject todo_item = new QBCustomObject();
+        				todo_item.putString("to_do", task);
+        				todo_item.putInteger("owner", DataHolder.getDataHolder().getSignInUserId());
+        				todo_item.putBoolean("done", false);
+        				todo_item.setClassName("Todo");
+        				QBCustomObjects.createObject(todo_item, new QBEntityCallbackImpl<QBCustomObject>() {
+        		    	    @Override
+        		    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+        		    	    	updateUI(currentMode);
+        		    	    }
+        		    	 
+        		    	    @Override
+        		    	    public void onError(List<String> errors) {
+        		    	 
+        		    	    }
+        		    	});
+        			}
+        		});
+
+        		builder.setNegativeButton("Cancel",null);
+
+        		builder.create().show();
                 break;
         }
     	

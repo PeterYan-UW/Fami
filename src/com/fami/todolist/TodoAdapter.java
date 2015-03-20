@@ -21,10 +21,11 @@ public class TodoAdapter extends BaseAdapter {
     private String currentUser;
     private String currentMode;
     
-    public TodoAdapter(List<QBCustomObject> dataSource, String currentUser, Context ctx) {
+    public TodoAdapter(List<QBCustomObject> dataSource, String currentUser, String currentMode, Context ctx) {
         this.dataSource = dataSource;
         this.inflater = LayoutInflater.from(ctx);
         this.currentUser = currentUser;
+        this.currentMode = currentMode;
     }
     
 	@Override
@@ -60,7 +61,11 @@ public class TodoAdapter extends BaseAdapter {
         if (task != null) {
             holder.task.setText(task.getFields().get("to_do").toString());
             holder.task_id.setText(Integer.toString(position));
-            if (currentUser.equals("self")){
+            if (currentMode.equals("done")){
+                holder.done_btn.setVisibility(View.INVISIBLE);
+                holder.take_btn.setVisibility(View.INVISIBLE);
+            }
+            else if (currentUser.equals("self")){
                 holder.done_btn.setVisibility(View.VISIBLE);
                 holder.take_btn.setVisibility(View.INVISIBLE);
             }
