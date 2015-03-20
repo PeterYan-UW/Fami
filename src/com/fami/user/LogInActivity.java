@@ -10,9 +10,12 @@ import android.widget.EditText;
 
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.QBRoster;
+import com.quickblox.content.QBContent;
+import com.quickblox.content.model.QBFile;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
+import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.core.request.QBRequestGetBuilder;
 import com.quickblox.core.server.BaseService;
 import com.quickblox.customobjects.QBCustomObjects;
@@ -25,6 +28,8 @@ import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.chat.ChatActivity;
 import com.fami.chat.FamiChatActivity;
+import com.fami.photo.helper.PhotoDataHolder;
+import com.fami.photo.utils.Constants;
 import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
@@ -85,6 +90,10 @@ public class LogInActivity extends BaseActivity{
                         DialogUtils.showLong(context, getResources().getString(R.string.user_successfully_sign_in));
                         QBUser user = ((ApplicationSingleton)getApplication()).getCurrentUser();
                         loginToChat(user);
+                        
+                        PhotoDataHolder.getDataHolder().setSignInUserId(DataHolder.getDataHolder().getSignInUserId());
+                        getFileList();
+                        
                         progressDialog.hide();
                         checkFami();
                     }
@@ -173,4 +182,27 @@ public class LogInActivity extends BaseActivity{
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 	}
+	private void getFileList() {
+
+        // Gey all user's files
+        //
+        QBPagedRequestBuilder builder = new QBPagedRequestBuilder();
+        builder.setPerPage(Constants.QB_PER_PAGE);
+        builder.setPage(Constants.QB_PAGE);
+        Log.v("here1","here");
+        QBContent.getFiles(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
+            @Override
+            public void onSuccess(ArrayList<QBFile> qbFiles, Bundle bundle) {
+            	Log.v("here2","here");
+                PhotoDataHolder.getDataHolder().setQbFileList(qbFiles);
+                // show activity_gallery
+                //startGalleryActivity();
+            }
+
+            @Override
+            public void onError(List<String> strings) {
+            	Log.v("here3","here");
+            }
+        });
+    }
 }

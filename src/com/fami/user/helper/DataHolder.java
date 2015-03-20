@@ -1,15 +1,19 @@
 package com.fami.user.helper;
 
 import com.fami.Family;
+import com.quickblox.content.model.QBFile;
 import com.quickblox.users.model.QBUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataHolder {
 
     private static DataHolder dataHolder;
     private QBUser signInQbUser;
     private Family family;
+    private int signInUserId;
+    private List<QBFile> qbFileList;
 
     public static synchronized DataHolder getDataHolder() {
         if (dataHolder == null) {
@@ -88,6 +92,30 @@ public class DataHolder {
 	public Family getFamily() {
         return this.family;
 	}
+	
+	public int PhotogetSignInUserId() {
+        return signInUserId;
+    }
+
+    public void setSignInUserId(int signInUserId) {
+        this.signInUserId = signInUserId;
+    }
+
+    public void setQbFileList(List<QBFile> qbFileList) {
+        this.qbFileList = qbFileList;
+    }
+
+    public int getQbFileListSize() {
+        return qbFileList.size();
+    }
+
+    public String getPublicUrl(int position) {
+        return qbFileList.get(position).getUid();
+    }
+
+    public void addQbFile(QBFile qbFile) {
+        qbFileList.add(qbFile);
+    }
 }
 
 
