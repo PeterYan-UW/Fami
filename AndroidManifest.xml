@@ -72,6 +72,18 @@
         <activity
             android:name=".photo.activities.PhotoSplash"
             android:label="@string/title_activity_search_user" />
+        <activity
+            android:name="com.fami.setting.MainSetting"
+            android:label="@string/title_activity_main_setting" >
+        </activity>
+        <activity
+            android:name="com.fami.setting.FamiInfo"
+            android:label="@string/title_activity_fami_info" >
+        </activity>
+        <activity
+            android:name="com.fami.setting.UserInfo"
+            android:label="@string/title_activity_fami_info" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

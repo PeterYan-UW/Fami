@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/Name_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/changecolor"
+        android:clickable="true"
+        android:text="Name"
+        android:gravity="center_vertical" 
+        android:paddingLeft="30dp"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="0dp"
+        android:background="#585858"/>
+
+    <Button
+        android:id="@+id/Email_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/changecolor"
+        android:clickable="true"
+        android:text="Email"
+        android:gravity="center_vertical" 
+        android:paddingLeft="30dp"
+        android:textSize="16sp" />
+    
+    <View
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="0dp"
+        android:background="#585858"/>
+
+    <Button
+        android:id="@+id/Phone_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/changecolor"
+        android:clickable="true"
+        android:text="Phone"
+        android:gravity="center_vertical" 
+        android:paddingLeft="30dp"
+        android:textSize="16sp" />
+    
+    <View
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="0dp"
+        android:background="#585858"/>
+
+    <Button
+        android:id="@+id/Website_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/changecolor"
+        android:clickable="true"
+        android:text="Website"
+        android:gravity="center_vertical" 
+        android:paddingLeft="30dp"
+        android:textSize="16sp" />
+
+
+    <Button
+        android:id="@+id/Password_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/changecolor"
+        android:clickable="true"
+        android:text="Password"
+        android:gravity="center_vertical" 
+        android:paddingLeft="30dp"
+        android:textSize="16sp" />
+
+</LinearLayout>

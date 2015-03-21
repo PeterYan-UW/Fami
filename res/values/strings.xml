@@ -36,5 +36,6 @@
     <string name="mgs_unknown_error">Unknown error</string>
     <string name="title_activity_user_info">UserInfo</string>
     <string name="title_activity_main_setting">MainSetting</string>
+    <string name="title_activity_fami_info">Fami_info</string>
 
 </resources>

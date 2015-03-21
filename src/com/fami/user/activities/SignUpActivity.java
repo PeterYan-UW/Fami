@@ -2,20 +2,27 @@ package com.fami.user.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.fami.BaseActivity;
 import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.photo.helper.PhotoDataHolder;
+import com.fami.photo.utils.Constants;
 import com.fami.family.CreateFami;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
+import com.quickblox.content.QBContent;
+import com.quickblox.content.model.QBFile;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.helper.StringifyArrayList;
+import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
+import java.util.ArrayList;
 import java.util.List;
 public class SignUpActivity extends BaseActivity {
 
@@ -52,7 +59,10 @@ public class SignUpActivity extends BaseActivity {
 
                         DataHolder.getDataHolder().setSignInQbUser(qbUser);
                         DataHolder.getDataHolder().setSignInUserPassword(signupPassword.getText().toString());
-
+                        
+                        PhotoDataHolder.getDataHolder().setSignInUserId(DataHolder.getDataHolder().getSignInUserId());
+                        getFileList();
+                        
                         createFami();
                     }
 
@@ -71,5 +81,28 @@ public class SignUpActivity extends BaseActivity {
         Intent intent = new Intent(this, CreateFami.class);
         startActivity(intent);
         finish();
+    }
+	private void getFileList() {
+
+        // Gey all user's files
+        //
+        QBPagedRequestBuilder builder = new QBPagedRequestBuilder();
+        builder.setPerPage(Constants.QB_PER_PAGE);
+        builder.setPage(Constants.QB_PAGE);
+        Log.v("here1","here");
+        QBContent.getFiles(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
+            @Override
+            public void onSuccess(ArrayList<QBFile> qbFiles, Bundle bundle) {
+            	Log.v("here2","here");
+                PhotoDataHolder.getDataHolder().setQbFileList(qbFiles);
+                // show activity_gallery
+                //startGalleryActivity();
+            }
+
+            @Override
+            public void onError(List<String> strings) {
+            	Log.v("here3","here");
+            }
+        });
     }
 }

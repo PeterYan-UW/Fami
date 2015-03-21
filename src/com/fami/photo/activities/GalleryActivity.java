@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.quickblox.core.QBProgressCallback;
+import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.photo.adapter.GalleryAdapter;
 import com.fami.photo.helper.PhotoDataHolder;
@@ -120,4 +121,8 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
             }
         });
     }
+    public void onBackPressed(){
+    	Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+	}
 }
