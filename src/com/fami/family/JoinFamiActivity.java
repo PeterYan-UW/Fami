@@ -1,4 +1,7 @@
-package com.fami.chat;
+package com.fami.family;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fami.MainActivity;
+import com.fami.BaseActivity;
 import com.fami.R;
-import com.fami.user.LogInActivity;
+import com.fami.family.FamiActivity.SectionsPagerAdapter;
+import com.fami.user.UsersFragment;
+import com.fami.user.activities.LogInActivity;
 
-public class FamiChatActivity extends ActionBarActivity {
+public class JoinFamiActivity extends ActionBarActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
@@ -72,7 +74,7 @@ public class FamiChatActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(FamiChatActivity.this, LogInActivity.class);
+        Intent i = new Intent(JoinFamiActivity.this, LogInActivity.class);
         startActivity(i);
         finish();
     }

@@ -1,4 +1,4 @@
-package com.fami.chat;
+package com.fami.user;
 
 import android.content.Context;
 import android.view.LayoutInflater;

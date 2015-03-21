@@ -15,6 +15,7 @@ import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.core.exception.QBResponseException;
 import com.fami.R;
 import com.fami.user.helper.ApplicationSingleton;
+import com.fami.user.helper.DataHolder;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
@@ -72,12 +73,8 @@ public class ChatAdapter extends BaseAdapter {
         setAlignment(holder, isOutgoing);
         holder.txtMessage.setText(chatMessage.getBody());
         if (chatMessage.getSenderId() != null) {
-        	
-        	holder.txtInfo.setText(chatMessage.getSenderId() + ": " + getTimeText(chatMessage));
-            
-            
-            
-            
+        	String sender_email = DataHolder.getDataHolder().getMember(chatMessage.getSenderId()).getEmail();
+        	holder.txtInfo.setText(sender_email + ": " + getTimeText(chatMessage));
             
         } else {
             holder.txtInfo.setText(getTimeText(chatMessage));

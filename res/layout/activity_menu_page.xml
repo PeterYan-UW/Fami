@@ -59,14 +59,14 @@
 
 
     <ImageButton
-        android:id="@+id/photo"
+        android:id="@+id/album"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="430dp"
         android:layout_marginLeft="46dp"
         android:background="@drawable/albumicon"
-        android:onClick="onClick" />
+        android:onClick="onClick"  />
 
     <ImageView
         android:id="@+id/imageView1"

@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami.user.activities;
 
 import java.util.List;
 

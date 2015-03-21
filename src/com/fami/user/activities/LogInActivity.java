@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami.user.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import com.quickblox.chat.QBRoster;
 import com.quickblox.content.QBContent;
 import com.quickblox.content.model.QBFile;
 import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.core.request.QBPagedRequestBuilder;
@@ -23,19 +24,22 @@ import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.fami.BaseActivity;
-import com.fami.Family;
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.chat.ChatActivity;
-import com.fami.chat.FamiChatActivity;
+import com.fami.family.CreateFami;
+import com.fami.family.FamiActivity;
 import com.fami.photo.helper.PhotoDataHolder;
 import com.fami.photo.utils.Constants;
+import com.fami.user.Family;
+import com.fami.user.Member;
 import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -146,12 +150,33 @@ public class LogInActivity extends BaseActivity{
 	    	DataHolder.getDataHolder().setFamily(family);
 			HashMap<String, Object> fields = customObjects.get(0).getFields();
 	    	DataHolder.getDataHolder().setChatRoom((String) fields.get("dialog_id"));
-	    	DataHolder.getDataHolder().setMenmber((ArrayList<Integer>) fields.get("member_id"));
+	    	ArrayList<Integer> usersIDs = (ArrayList<Integer>) fields.get("member_id");
+	    	QBPagedRequestBuilder requestBuilder = new QBPagedRequestBuilder();
+	        requestBuilder.setPage(1);
+	        requestBuilder.setPerPage(usersIDs.size());
+			QBUsers.getUsersByIDs(usersIDs , requestBuilder, new QBEntityCallbackImpl<ArrayList<QBUser>>(){
+				@Override
+	            public void onSuccess(ArrayList<QBUser> users, Bundle params) {
+					HashMap<Integer, Member> family = new HashMap<Integer, Member>();
+			        for(QBUser user : users){
+			            Member member = new Member();
+			        	member.setEmail(user.getEmail());
+			        	member.setId(user.getId());
+			        	member.setFullName(user.getFullName());
+			        	family.put(user.getId(), member);
+			        }
+			    	DataHolder.getDataHolder().setMenmber(family);
+	            }
+
+	            @Override
+	            public void onError(List<String> errors) {
+
+	            }
+			});	
 	        Intent intent = new Intent(this, MainActivity.class);
 	        startActivity(intent);
-	        finish();			
+	        finish();		
 		}
-		
 	}
 
 	private void loginToChat(QBUser user){
