@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami.family;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.fami.BaseActivity;
 import com.fami.R;
-import com.fami.chat.FamiChatActivity;
+import com.fami.user.activities.LogInActivity;
 
 public class CreateFami extends BaseActivity{
 	
@@ -19,9 +19,16 @@ public class CreateFami extends BaseActivity{
 	public void onClick(View view) {
         switch (view.getId()) {
 	        case R.id.create_fami:
-	        	Intent create_fami = new Intent(this, FamiChatActivity.class);
+	        	Intent create_fami = new Intent(this, FamiActivity.class);
 	            startActivity(create_fami);
 	            finish();
+	            break;
+	        case R.id.join_fami:
+	        	Intent join_fami = new Intent(this, JoinFamiActivity.class);
+	            startActivity(join_fami);
+	            finish();
+	            break;
+	        	
         }
     }
 	public void onBackPressed(){

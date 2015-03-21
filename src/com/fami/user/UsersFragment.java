@@ -1,4 +1,4 @@
-package com.fami.chat;
+package com.fami.user;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -11,10 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.fami.Family;
 import com.fami.MainActivity;
 import com.fami.R;
-import com.fami.user.Member;
 import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;

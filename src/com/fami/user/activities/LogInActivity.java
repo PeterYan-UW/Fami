@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami.user.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -24,13 +24,15 @@ import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.fami.BaseActivity;
-import com.fami.Family;
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.chat.ChatActivity;
-import com.fami.chat.FamiChatActivity;
+import com.fami.family.CreateFami;
+import com.fami.family.FamiActivity;
 import com.fami.photo.helper.PhotoDataHolder;
 import com.fami.photo.utils.Constants;
+import com.fami.user.Family;
+import com.fami.user.Member;
 import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;

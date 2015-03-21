@@ -1,10 +1,8 @@
-package com.fami;
+package com.fami.user;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-
-import com.fami.user.Member;
 
 public class Family {
 	private String chatRoom = "";

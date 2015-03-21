@@ -1,6 +1,6 @@
 package com.fami.user.helper;
 
-import com.fami.Family;
+import com.fami.user.Family;
 import com.fami.user.Member;
 import com.quickblox.content.model.QBFile;
 import com.quickblox.users.model.QBUser;

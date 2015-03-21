@@ -1,4 +1,4 @@
-package com.fami.user;
+package com.fami.user.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.fami.BaseActivity;
 import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.family.CreateFami;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallbackImpl;
@@ -44,9 +45,6 @@ public class SignUpActivity extends BaseActivity {
                 qbUser.setLogin(signupEmail.getText().toString());
                 qbUser.setEmail(signupEmail.getText().toString());
                 qbUser.setPassword(signupPassword.getText().toString());
-//              StringifyArrayList<String> tags = new StringifyArrayList<String>();
-//              tags.add("UnFami");
-//				qbUser.setTags(tags);
                 QBUsers.signUpSignInTask(qbUser, new QBEntityCallbackImpl<QBUser>() {
                     @Override
                     public void onSuccess(QBUser qbUser, Bundle bundle) {

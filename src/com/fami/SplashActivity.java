@@ -8,12 +8,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.fami.R;
-import com.fami.user.LogInActivity;
+import com.fami.user.activities.LogInActivity;
 import com.fami.user.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.model.QBSession;
+
 import java.util.List;
 
 public class SplashActivity extends Activity{
