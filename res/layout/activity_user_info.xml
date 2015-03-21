@@ -1,86 +1,140 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
     <Button
         android:id="@+id/Name_button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/changecolor"
         android:clickable="true"
-        android:text="Name"
-        android:gravity="center_vertical" 
+        android:gravity="center_vertical"
         android:paddingLeft="30dp"
-        android:textSize="16sp"/>
-
-    <View
-        android:layout_width="315dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="0dp"
-        android:background="#585858"/>
+        android:text="Name"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/Email_button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="90dp"
         android:background="@drawable/changecolor"
         android:clickable="true"
-        android:text="Email"
-        android:gravity="center_vertical" 
+        android:gravity="center_vertical"
         android:paddingLeft="30dp"
-        android:textSize="16sp" />
-    
-    <View
-        android:layout_width="315dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="0dp"
-        android:background="#585858"/>
+        android:text="Email"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/Phone_button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="140dp"
         android:background="@drawable/changecolor"
         android:clickable="true"
-        android:text="Phone"
-        android:gravity="center_vertical" 
+        android:gravity="center_vertical"
         android:paddingLeft="30dp"
-        android:textSize="16sp" />
-    
-    <View
-        android:layout_width="315dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="0dp"
-        android:background="#585858"/>
+        android:text="Phone"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/Website_button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="190dp"
         android:background="@drawable/changecolor"
         android:clickable="true"
-        android:text="Website"
-        android:gravity="center_vertical" 
+        android:gravity="center_vertical"
         android:paddingLeft="30dp"
-        android:textSize="16sp" />
-
+        android:text="Website"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/Password_button"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="310dp"
         android:background="@drawable/changecolor"
         android:clickable="true"
-        android:text="Password"
-        android:gravity="center_vertical" 
+        android:gravity="center_vertical"
         android:paddingLeft="30dp"
-        android:textSize="16sp" />
+        android:text="Password"
+        android:textSize="20sp" />
 
-</LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:background="#585858" />
+
+    <View
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:background="#585858" />
+
+    <View
+        android:layout_width="315dp"
+        android:layout_height="1dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190dp"
+        android:background="#585858" />
+	
+    <TextView
+        android:id="@+id/Name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/view1"
+        android:layout_alignBottom="@+id/Name_button"
+        android:layout_marginRight="18dp"
+        android:gravity="center_vertical"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:textStyle="italic"
+        android:color="#D8D8D8"/>
+    
+    <TextView
+        android:id="@+id/Email_text"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/view1"
+        android:layout_alignBottom="@+id/Email_button"
+        android:layout_marginRight="18dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:gravity="center_vertical"
+        android:textStyle="italic"
+        android:color="#D8D8D8"/>
+    
+    <TextView
+        android:id="@+id/Phone_text"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/view1"
+        android:layout_alignTop="@+id/Phone_button"
+        android:layout_marginRight="18dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:gravity="center_vertical"
+        android:textStyle="italic"
+        android:color="#D8D8D8"/>
+    
+    <TextView
+        android:id="@+id/Website_text"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/view1"
+        android:layout_alignBottom="@+id/Website_button"
+        android:layout_marginRight="18dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:gravity="center_vertical"
+        android:color="#D8D8D8"
+        android:textStyle="italic"/>
+    
+
+</RelativeLayout>
