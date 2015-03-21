@@ -1,20 +1,32 @@
 package com.fami;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import com.fami.user.Member;
 
 public class Family {
 	private String chatRoom = "";
-	private ArrayList<Integer> memberId = null;
+	private HashMap<Integer, Member> member = null;
 	public String getChatRoom() {
 		return chatRoom;
 	}
 	public void setChatRoom(String chatRoom) {
 		this.chatRoom = chatRoom;
 	}
-	public ArrayList<Integer> getMemberId() {
-		return memberId;
+	public void setMember(HashMap<Integer, Member> member) {
+		this.member = member;
 	}
-	public void setMemberId(ArrayList<Integer> memberId) {
-		this.memberId = memberId;
+	public Member getMember(int id) {
+		return member.get(id);
+	}	
+	public HashMap<Integer, Member> getAllMember() {
+		return member;
+	}
+	public ArrayList<Integer> getAllMemberId() {
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		ids.addAll(member.keySet());
+		return ids;
 	}
 }

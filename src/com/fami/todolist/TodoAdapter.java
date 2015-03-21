@@ -3,6 +3,7 @@ package com.fami.todolist;
 import java.util.List;
 
 import com.fami.R;
+import com.fami.user.helper.DataHolder;
 import com.quickblox.customobjects.model.QBCustomObject;
 
 import android.content.Context;
@@ -18,10 +19,10 @@ public class TodoAdapter extends BaseAdapter {
 
     private List<QBCustomObject> dataSource;
     private LayoutInflater inflater;
-    private String currentUser;
+    private int currentUser;
     private String currentMode;
     
-    public TodoAdapter(List<QBCustomObject> dataSource, String currentUser, String currentMode, Context ctx) {
+    public TodoAdapter(List<QBCustomObject> dataSource, int currentUser, String currentMode, Context ctx) {
         this.dataSource = dataSource;
         this.inflater = LayoutInflater.from(ctx);
         this.currentUser = currentUser;
@@ -65,7 +66,7 @@ public class TodoAdapter extends BaseAdapter {
                 holder.done_btn.setVisibility(View.INVISIBLE);
                 holder.take_btn.setVisibility(View.INVISIBLE);
             }
-            else if (currentUser.equals("self")){
+            else if (currentUser == DataHolder.getDataHolder().getSignInUserId()){
                 holder.done_btn.setVisibility(View.VISIBLE);
                 holder.take_btn.setVisibility(View.INVISIBLE);
             }
