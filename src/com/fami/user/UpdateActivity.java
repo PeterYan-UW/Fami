@@ -205,5 +205,9 @@ public class UpdateActivity extends BaseActivity {
 		startActivity(intent);
 		finish();
 	}
+    public void onBackPressed(){
+    	Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+	}
 }
  

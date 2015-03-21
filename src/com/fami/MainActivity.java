@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.fami.R;
 import com.fami.chat.ChatActivity;
+import com.fami.photo.activities.GalleryActivity;
+import com.fami.setting.UserInfo;
 import com.fami.todolist.TodolistActivity;
+import com.fami.setting.MainSetting;
 import com.fami.user.UpdateActivity;
 import com.fami.user.helper.DataHolder;
 import com.quickblox.chat.QBChatService;
@@ -50,7 +53,7 @@ public class MainActivity extends BaseActivity{
                 });
                 break;
             case R.id.setting:
-            	Intent enter_setting = new Intent(this,UpdateActivity.class);
+            	Intent enter_setting = new Intent(this,MainSetting.class);
         		startActivity(enter_setting);
         		finish();
                 break;
@@ -62,6 +65,11 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.sign_up:
             	break;
+            case R.id.photo:
+            	progressDialog.show();
+            	startGalleryActivity();
+            	finish();
+                break;
         }
     }
 	
@@ -71,7 +79,11 @@ public class MainActivity extends BaseActivity{
         context.startActivity(intent);
 		
 	}
-
+	private void startGalleryActivity() {
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
+        finish();
+    }
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.
