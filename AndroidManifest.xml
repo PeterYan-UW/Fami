@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".user.SignUpActivity"
+            android:name=".user.activities.SignUpActivity"
             android:label="@string/sign_up"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user.LogInActivity"
+            android:name=".user.activities.LogInActivity"
             android:label="@string/log_in"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -41,12 +41,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user.CreateFami"
+            android:name=".family.CreateFami"
             android:label="@string/create_fami"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".chat.FamiChatActivity"
+            android:name=".family.FamiActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -55,7 +55,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".user.UpdateActivity"
+            android:name=".user.activities.UpdateActivity"
             android:label="@string/title_activity_update" />
         <activity
             android:name=".user.SearchUserActivity"
@@ -70,6 +70,25 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.fami.MainActivity" />
+            android:name=".photo.activities.GalleryActivity"
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".photo.activities.ShowImageActivity"
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name=".photo.activities.PhotoSplash"
+            android:label="@string/title_activity_search_user" />
+        <activity
+            android:name="com.fami.setting.MainSetting"
+            android:label="@string/title_activity_main_setting" >
+        </activity>
+        <activity
+            android:name="com.fami.setting.FamiInfo"
+            android:label="@string/title_activity_fami_info" >
+        </activity>
+        <activity
+            android:name="com.fami.setting.UserInfo"
+            android:label="@string/title_activity_fami_info" >
         </activity>
     </application>
 

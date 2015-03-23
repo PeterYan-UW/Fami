@@ -1,15 +1,22 @@
 package com.fami.user.helper;
 
-import com.fami.Family;
+import com.fami.user.Family;
+import com.fami.user.Member;
+import com.quickblox.content.model.QBFile;
 import com.quickblox.users.model.QBUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class DataHolder {
 
     private static DataHolder dataHolder;
     private QBUser signInQbUser;
     private Family family;
+    private int signInUserId;
+    private List<QBFile> qbFileList;
 
     public static synchronized DataHolder getDataHolder() {
         if (dataHolder == null) {
@@ -70,15 +77,21 @@ public class DataHolder {
 		family.setChatRoom(chatRoom);
 	}
 	
-	public void setMenmber(ArrayList<Integer> memberId){
-		family.setMemberId(memberId);
+	public void setMenmber(HashMap<Integer, Member> member){
+		family.setMember(member);
 	}
 	public String getChatRoom(){
 		return family.getChatRoom();
 	}
 	
-	public ArrayList<Integer> getMenmber(){
-		return family.getMemberId();
+	public Member getMember(int id){
+		return family.getMember(id);
+	}
+	public HashMap<Integer, Member> getAllMember(){
+		return family.getAllMember();
+	}	
+	public ArrayList<Integer> getAllMemberId(){
+		return family.getAllMemberId();
 	}
 
 	public void setFamily(Family family) {
@@ -88,6 +101,30 @@ public class DataHolder {
 	public Family getFamily() {
         return this.family;
 	}
+	
+	public int PhotogetSignInUserId() {
+        return signInUserId;
+    }
+
+    public void setSignInUserId(int signInUserId) {
+        this.signInUserId = signInUserId;
+    }
+
+    public void setQbFileList(List<QBFile> qbFileList) {
+        this.qbFileList = qbFileList;
+    }
+
+    public int getQbFileListSize() {
+        return qbFileList.size();
+    }
+
+    public String getPublicUrl(int position) {
+        return qbFileList.get(position).getUid();
+    }
+
+    public void addQbFile(QBFile qbFile) {
+        qbFileList.add(qbFile);
+    }
 }
 
 

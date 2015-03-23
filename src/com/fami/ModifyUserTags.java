@@ -43,16 +43,16 @@ public class ModifyUserTags {
 		return role;
 	}
 	
-	public static StringifyArrayList<String> updateFami(StringifyArrayList<String> tags, String new_fami){
-		if (new_fami == "Fami"){
-			tags.remove("UnFami");
-		}
-		else{
-			tags.remove("Fami");
-		}
-		tags.add(new_fami);
-		return tags;
-	}	
+//	public static StringifyArrayList<String> updateFami(StringifyArrayList<String> tags, String new_fami){
+//		if (new_fami == "Fami"){
+//			tags.remove("UnFami");
+//		}
+//		else{
+//			tags.remove("Fami");
+//		}
+//		tags.add(new_fami);
+//		return tags;
+//	}	
 	public static StringifyArrayList<String> addRole(StringifyArrayList<String> tags, String value){
 		StringifyArrayList<String> newTags=addTag(tags, "Role", value);
 		return newTags;
