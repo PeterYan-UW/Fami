@@ -38,5 +38,14 @@
     <string name="title_activity_user_info">UserInfo</string>
     <string name="title_activity_main_setting">MainSetting</string>
     <string name="title_activity_fami_info">Fami_info</string>
-
+    <string name="btn_check_in">Check In</string>
+    <string name="dlg_location_error">Error(s) occurred. Look into DDMS log for details, please. Errors: </string>
+    <string name="dlg_check_in">Check In</string>
+    <string name="dlg_enter_message">Please enter your message</string>
+    <string name="dlg_check_in_success">Check In was successful!</string>
+    <string name="dlg_it_is_me">It is me</string>
+    <string name="dlg_user_login">User login: </string>
+    <string name="dlg_status">\nStatus: </string>
+    <string name="map">Map</string>
+    <string name="empty">empty</string>
 </resources>

@@ -64,12 +64,6 @@
             android:name=".todolist.TodolistActivity"
             android:label="@string/title_activity_search_user" />
         <activity
-            android:name="com.fami.events.Events"
-            android:label="@string/title_activity_events"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.fami.MainActivity" />
             android:name=".photo.activities.GalleryActivity"
             android:label="@string/title_activity_search_user" />
         <activity
