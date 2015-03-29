@@ -28,7 +28,7 @@ import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.chat.ChatActivity;
 import com.fami.family.CreateFami;
-import com.fami.family.CreateFamiActivity;
+import com.fami.family.FamiActivity;
 import com.fami.photo.helper.PhotoDataHolder;
 import com.fami.photo.utils.Constants;
 import com.fami.user.Family;
