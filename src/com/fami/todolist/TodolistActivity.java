@@ -41,9 +41,9 @@ public class TodolistActivity extends FragmentActivity {
 
 	private void updateUI(String Mode) {
 		final TextView textViewToChange = (TextView) findViewById(R.id.userName);
-		String username = DataHolder.getDataHolder().getSignInUserEmail();
+		String username = DataHolder.getDataHolder().getSignInUserFullName();
 		if (TodoUserId != DataHolder.getDataHolder().getSignInUserId()){
-			username = DataHolder.getDataHolder().getMember(TodoUserId).getEmail();
+			username = DataHolder.getDataHolder().getMember(TodoUserId).getFullName();
 		}
 		textViewToChange.setText(""+username);
     	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
@@ -143,11 +143,11 @@ public class TodolistActivity extends FragmentActivity {
         				members_name[i]="Self";
         			}
         			else{
-        				members_name[i] = allMember.get(allMemberId.get(i)).getEmail();
+        				members_name[i] = allMember.get(allMemberId.get(i)).getFullName();
         			}
         		}
         		final String[] all_members_name = members_name;
-        		chooseBuilder.setSingleChoiceItems(all_members_name, 0, new DialogInterface.OnClickListener() {
+        		chooseBuilder.setSingleChoiceItems(all_members_name, 1, new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

@@ -76,18 +76,15 @@
         <activity
             android:name=".photo.activities.PhotoSplash"
             android:label="@string/title_activity_search_user" />
-        <activity
-            android:name="com.fami.setting.MainSetting"
-            android:label="@string/title_activity_main_setting" >
-        </activity>
-        <activity
-            android:name="com.fami.setting.FamiInfo"
-            android:label="@string/title_activity_fami_info" >
-        </activity>
-        <activity
-            android:name="com.fami.setting.UserInfo"
-            android:label="@string/title_activity_fami_info" >
-        </activity>
+        <activity 
+            android:label="@string/title_activity_main_setting" 
+            android:name=".setting.MainSetting"/>
+		<activity 
+		    android:label="@string/title_activity_fami_info" 
+		    android:name=".setting.FamiInfo"/>
+		<activity 
+		    android:label="@string/title_activity_fami_info" 
+		    android:name=".setting.UserInfo"/>
         <activity
             android:name="com.fami.whereabouts.activities.MapActivity"
             android:label="@string/map"
@@ -103,6 +100,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />

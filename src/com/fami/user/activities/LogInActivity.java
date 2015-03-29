@@ -5,20 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.quickblox.chat.QBChatService;
-import com.quickblox.chat.QBRoster;
 import com.quickblox.content.QBContent;
 import com.quickblox.content.model.QBFile;
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.QBSettings;
 import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.core.request.QBRequestGetBuilder;
-import com.quickblox.core.server.BaseService;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.users.QBUsers;
@@ -26,9 +20,7 @@ import com.quickblox.users.model.QBUser;
 import com.fami.BaseActivity;
 import com.fami.MainActivity;
 import com.fami.R;
-import com.fami.chat.ChatActivity;
 import com.fami.family.CreateFami;
-import com.fami.family.CreateFamiActivity;
 import com.fami.photo.helper.PhotoDataHolder;
 import com.fami.photo.utils.Constants;
 import com.fami.user.Family;
@@ -37,14 +29,11 @@ import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPException;
 
 public class LogInActivity extends BaseActivity{
 
@@ -163,6 +152,7 @@ public class LogInActivity extends BaseActivity{
 			        	member.setEmail(user.getEmail());
 			        	member.setId(user.getId());
 			        	member.setFullName(user.getFullName());
+			        	member.setPhone(user.getPhone());
 			        	family.put(user.getId(), member);
 			        }
 			    	DataHolder.getDataHolder().setMenmber(family);
@@ -214,11 +204,9 @@ public class LogInActivity extends BaseActivity{
         QBPagedRequestBuilder builder = new QBPagedRequestBuilder();
         builder.setPerPage(Constants.QB_PER_PAGE);
         builder.setPage(Constants.QB_PAGE);
-        Log.v("here1","here");
         QBContent.getFiles(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
             @Override
             public void onSuccess(ArrayList<QBFile> qbFiles, Bundle bundle) {
-            	Log.v("here2","here");
                 PhotoDataHolder.getDataHolder().setQbFileList(qbFiles);
                 // show activity_gallery
                 //startGalleryActivity();
@@ -226,7 +214,6 @@ public class LogInActivity extends BaseActivity{
 
             @Override
             public void onError(List<String> strings) {
-            	Log.v("here3","here");
             }
         });
     }

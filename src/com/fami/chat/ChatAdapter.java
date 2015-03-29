@@ -73,8 +73,8 @@ public class ChatAdapter extends BaseAdapter {
         setAlignment(holder, isOutgoing);
         holder.txtMessage.setText(chatMessage.getBody());
         if (chatMessage.getSenderId() != null) {
-        	String sender_email = DataHolder.getDataHolder().getMember(chatMessage.getSenderId()).getEmail();
-        	holder.txtInfo.setText(sender_email + ": " + getTimeText(chatMessage));
+        	String sender_name = DataHolder.getDataHolder().getMember(chatMessage.getSenderId()).getFullName();
+        	holder.txtInfo.setText(sender_name + ": " + getTimeText(chatMessage));
             
         } else {
             holder.txtInfo.setText(getTimeText(chatMessage));

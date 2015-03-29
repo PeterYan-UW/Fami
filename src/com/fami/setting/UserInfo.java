@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class UserInfo extends Fragment {
 	private Button emailbutton;
 	private Button phonebutton;
 	private Button websitebutton;
+	private Button passwordbutton;
+	int current_password = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,7 @@ public class UserInfo extends Fragment {
         emailbutton = (Button) v.findViewById(R.id.Email_button);
         phonebutton = (Button) v.findViewById(R.id.Phone_button);
         websitebutton = (Button) v.findViewById(R.id.Website_button);
+        passwordbutton = (Button) v.findViewById(R.id.Password_button);
         
         
         
@@ -238,7 +242,100 @@ public class UserInfo extends Fragment {
             }
         });
         
+        
+        passwordbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	
+            	AlertDialog.Builder passwordbuilder = new AlertDialog.Builder(getActivity());
+            	passwordbuilder.setTitle("Edit Password");
+            	passwordbuilder.setMessage("Please Enter Your Current Password");
+        		final EditText inputField = new EditText(getActivity());
+        		passwordbuilder.setView(inputField);
+        		passwordbuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        			@Override
+        			public void onClick(DialogInterface dialogInterface, int i) {
+        				final String password = inputField.getText().toString();
+        				if (!password.toString().equals(DataHolder.getDataHolder().getSignInUserOldPassword())) {
+        					DialogUtils.showLong(getActivity(), getResources().getString(
+                                    R.string.password_was_incorrect));
+        					current_password = 0;
+        					return;
+        				}
+        				else {
+        					current_password =1;
+        				}
+        				if (current_password==1) {
+        					AlertDialog.Builder newpasswordbuilder = new AlertDialog.Builder(getActivity());
+        	            	newpasswordbuilder.setTitle("Edit Password");
+        	            	newpasswordbuilder.setMessage("Please Enter Your New Password");
+        	        		final EditText newinputField = new EditText(getActivity());
+        	        		newpasswordbuilder.setView(newinputField);
+        	        		newpasswordbuilder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+        	        			@Override
+        	        			public void onClick(DialogInterface dialogInterface, int i) {
+        	        				final String newpassword = newinputField.getText().toString();
+        	        				AlertDialog.Builder confirmpasswordbuilder = new AlertDialog.Builder(getActivity());
+        	        				confirmpasswordbuilder.setTitle("Edit Password");
+        	        				confirmpasswordbuilder.setMessage("Please Enter Your New Password Again");
+                	        		final EditText confirminputField = new EditText(getActivity());
+                	        		confirmpasswordbuilder.setView(confirminputField);
+                	        		confirmpasswordbuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                	        			@Override
+                	        			public void onClick(DialogInterface dialogInterface, int i) {
+                	        				final String confirmpassword = confirminputField.getText().toString();
+                	        				if (!confirmpassword.equals(newpassword)) {
+                	        					DialogUtils.showLong(getActivity(), getResources().getString(
+                	                                    R.string.password_not_match));
+                	        					return;
+                	        				}
+                	        				else {
+                	        					QBUser qbUser = new QBUser();
+                	            				qbUser.setId(DataHolder.getDataHolder().getSignInUserId());
+                	            				qbUser.setLogin(DataHolder.getDataHolder().getSignInUserLogin());
+                	            				qbUser.setPassword(newpassword.toString());
+                	                            qbUser.setOldPassword(password.toString());
+                	                            qbUser.setFullName(DataHolder.getDataHolder().getSignInUserFullName());
+                	                            qbUser.setEmail(DataHolder.getDataHolder().getSignInUserEmail());
+                	                            qbUser.setPhone(DataHolder.getDataHolder().getSignInUserPhone());
+                	                            qbUser.setWebsite(DataHolder.getDataHolder().getSignInUserWebSite());
+                	                            QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
+                	                                @Override
+                	                                public void onSuccess(QBUser qbUser, Bundle bundle) {
+                	                                    DataHolder.getDataHolder().setSignInQbUser(qbUser);
+                	                                    DialogUtils.showLong(getActivity(), getResources().getString(
+                	                                            R.string.user_successfully_updated));
+                	                                    DataHolder.getDataHolder().setSignInUserPassword(newpassword);
+                	                                }
+                	                                @Override
+                	                                public void onError(List<String> strings) {
+                	                                }
+                	                            });
+                	        					
+                	        				}
+                	        			}
+                	        		});
+                	        		confirmpasswordbuilder.setNegativeButton("Cancel",null);
+                	        		
+                	        		confirmpasswordbuilder.create().show();
+        	        			}
+        	        		});
+        	        		newpasswordbuilder.setNegativeButton("Cancel",null);
+        	        		
+        	        		newpasswordbuilder.create().show();
+        				}
+        				
+        					
+        			}
+        		});
+        		passwordbuilder.setNegativeButton("Cancel",null);
+        		
+        		passwordbuilder.create().show();
+            }
+        });
+        
         return v;
     }
+    
     
 }
