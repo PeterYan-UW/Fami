@@ -55,7 +55,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="430dp"
         android:layout_marginLeft="180dp"
-        android:background="@drawable/locationicon" />
+        android:background="@drawable/locationicon"
+        android:onClick="onClick" />
 
 
     <ImageButton

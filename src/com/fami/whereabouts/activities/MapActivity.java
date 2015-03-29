@@ -96,9 +96,10 @@ public class MapActivity extends FragmentActivity implements LocationListener {
         getLocationsBuilder.setPerPage(Constants.LOCATION_PER_PAGE);
         getLocationsBuilder.setLastOnly();
         ArrayList<Integer> UserIds = DataHolder.getDataHolder().getAllMemberId();
-        Iterator itr = UserIds.iterator();
-        while(itr.hasNext()) {
-        	getLocationsBuilder.setUserId((Long) itr.next());
+    	Log.v("location", "loc request");
+        for (Integer i: UserIds) {
+        	Long longI = new Long(i);
+        	getLocationsBuilder.setUserId(longI);
         }
 
         QBLocations.getLocations(getLocationsBuilder, new QBEntityCallbackImpl<ArrayList<QBLocation>>() {
