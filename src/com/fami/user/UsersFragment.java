@@ -227,6 +227,7 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         	member.setEmail(user.getEmail());
         	member.setId(user.getId());
         	member.setFullName(user.getFullName());
+        	member.setPhone(user.getPhone());
         	family.put(user.getId(), member);
         }
         return family;

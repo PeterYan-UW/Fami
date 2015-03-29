@@ -163,6 +163,7 @@ public class LogInActivity extends BaseActivity{
 			        	member.setEmail(user.getEmail());
 			        	member.setId(user.getId());
 			        	member.setFullName(user.getFullName());
+			        	member.setPhone(user.getPhone());
 			        	family.put(user.getId(), member);
 			        }
 			    	DataHolder.getDataHolder().setMenmber(family);
@@ -214,11 +215,9 @@ public class LogInActivity extends BaseActivity{
         QBPagedRequestBuilder builder = new QBPagedRequestBuilder();
         builder.setPerPage(Constants.QB_PER_PAGE);
         builder.setPage(Constants.QB_PAGE);
-        Log.v("here1","here");
         QBContent.getFiles(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
             @Override
             public void onSuccess(ArrayList<QBFile> qbFiles, Bundle bundle) {
-            	Log.v("here2","here");
                 PhotoDataHolder.getDataHolder().setQbFileList(qbFiles);
                 // show activity_gallery
                 //startGalleryActivity();
@@ -226,7 +225,6 @@ public class LogInActivity extends BaseActivity{
 
             @Override
             public void onError(List<String> strings) {
-            	Log.v("here3","here");
             }
         });
     }

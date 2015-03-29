@@ -61,14 +61,10 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        Log.v("here5","here");
         initUI();
-        Log.v("here6","here");
         initGalleryView();
-        Log.v("here7","here");
 
         imageHelper = new ImageHelper(this);
-        Log.v("here8","here");
     }
 
     private void initUI() {
@@ -79,7 +75,7 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
     private void initGalleryView() {
         galleryAdapter = new GalleryAdapter(getApplicationContext());
         galleryGridView.setAdapter(galleryAdapter);
-        //galleryGridView.setOnItemClickListener(this);
+        galleryGridView.setOnItemClickListener(this);
     }
 
     @Override
