@@ -10,6 +10,7 @@ import com.fami.setting.MainSetting;
 import com.fami.todolist.TodolistActivity;
 import com.fami.user.activities.UpdateActivity;
 import com.fami.user.helper.DataHolder;
+import com.fami.whereabouts.activities.MapActivity;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.chat.model.QBDialogType;
@@ -69,6 +70,13 @@ public class MainActivity extends BaseActivity{
             	startGalleryActivity();
             	finish();
                 break;
+            case R.id.location:
+            	progressDialog.show();
+            	Intent locIntent = new Intent(this, MapActivity.class);
+            	startActivity(locIntent);
+                finish();
+                break;
+            	
         }
     }
 	

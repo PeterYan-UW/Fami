@@ -49,13 +49,14 @@
         android:onClick="onClick" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/location"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="430dp"
         android:layout_marginLeft="180dp"
-        android:background="@drawable/locationicon" />
+        android:background="@drawable/locationicon"
+        android:onClick="onClick" />
 
 
     <ImageButton
