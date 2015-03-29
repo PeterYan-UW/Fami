@@ -21,6 +21,7 @@
     <string name="title_activity_search_user">SearchUserActivity</string>
     <string name="password_not_match">You must enter the same password twice</string>
     <string name="password_was_incorrect">Password was incorrect</string>
+    <string name="title_activity_events">Events</string>
     <string name="qb_slogan">YOUR COMMUNICATION \nBACKEND</string>
     <string name="content">Content</string>
     <string name="add_new_image">Add new image</string>
@@ -38,5 +39,14 @@
     <string name="title_activity_main_setting">MainSetting</string>
     <string name="title_activity_fami_info">Fami_info</string>
     <string name="title_activity_password_change">PasswordChange</string>
-
+    <string name="btn_check_in">Check In</string>
+    <string name="dlg_location_error">Error(s) occurred. Look into DDMS log for details, please. Errors: </string>
+    <string name="dlg_check_in">Check In</string>
+    <string name="dlg_enter_message">Please enter your message</string>
+    <string name="dlg_check_in_success">Check In was successful!</string>
+    <string name="dlg_it_is_me">It is me</string>
+    <string name="dlg_user_login">Name: </string>
+    <string name="dlg_status">\nStatus: </string>
+    <string name="map">Map</string>
+    <string name="empty">empty</string>
 </resources>
