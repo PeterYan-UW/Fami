@@ -4,24 +4,15 @@ import java.util.List;
 
 import com.fami.BaseActivity;
 import com.fami.MainActivity;
-import com.fami.ModifyUserTags;
 import com.fami.R;
-import com.fami.R.id;
-import com.fami.R.layout;
-import com.fami.R.menu;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
-import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 

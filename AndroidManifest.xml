@@ -46,9 +46,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".family.FamiActivity"
+            android:name=".family.CreateFamiActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".family.JoinFamiActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />        
         <activity
             android:name=".chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

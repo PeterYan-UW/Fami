@@ -6,7 +6,6 @@ import java.util.List;
 import com.fami.R;
 import com.fami.chat.ChatActivity;
 import com.fami.photo.activities.GalleryActivity;
-import com.fami.setting.MainSetting;
 import com.fami.todolist.TodolistActivity;
 import com.fami.user.activities.UpdateActivity;
 import com.fami.user.helper.DataHolder;
@@ -53,7 +52,7 @@ public class MainActivity extends BaseActivity{
                 });
                 break;
             case R.id.setting:
-            	Intent enter_setting = new Intent(this,MainSetting.class);
+            	Intent enter_setting = new Intent(this,UpdateActivity.class);
         		startActivity(enter_setting);
         		finish();
                 break;

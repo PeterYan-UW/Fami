@@ -17,7 +17,7 @@ import com.fami.R;
 import com.fami.user.UsersFragment;
 import com.fami.user.activities.LogInActivity;
 
-public class FamiActivity extends ActionBarActivity {
+public class CreateFamiActivity extends ActionBarActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
@@ -73,7 +73,7 @@ public class FamiActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(FamiActivity.this, LogInActivity.class);
+        Intent i = new Intent(CreateFamiActivity.this, CreateFami.class);
         startActivity(i);
         finish();
     }
