@@ -113,7 +113,7 @@ public class MapActivity extends FragmentActivity implements LocationListener {
                             location.getLatitude(), location.getLongitude())).icon(
                             BitmapDescriptorFactory.fromResource(R.drawable.map_marker_other)));
 
-                    Data data = new Data(location.getUser().getLogin(), location.getStatus());
+                    Data data = new Data(location.getUser().getFullName(), location.getStatus());
                     storageMap.put(marker, data);
                 }
             }
@@ -158,10 +158,10 @@ public class MapActivity extends FragmentActivity implements LocationListener {
         locationManager.requestLocationUpdates(provider, Constants.LOCATION_MIN_TIME, 0, this);
         Location location = locationManager.getLastKnownLocation(provider);
         if (location != null) {
-        	Log.v("pass"," test location");
+        	//Log.v("pass"," test location");
     		onLocationChanged(location);
         }
-        Log.v("pass","test");
+        //Log.v("pass","test");
         
     }
 
@@ -202,7 +202,7 @@ public class MapActivity extends FragmentActivity implements LocationListener {
             case R.id.check_in_button:
 
                 final EditText input = new EditText(this);
-                input.setTextColor(getResources().getColor(R.color.white));
+                input.setTextColor(getResources().getColor(R.color.black));
                 initAlertListeners(input);
 
                 final Dialog checkInAlert = DialogUtils.createDialog(context, R.string.dlg_check_in,

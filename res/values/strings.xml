@@ -44,7 +44,7 @@
     <string name="dlg_enter_message">Please enter your message</string>
     <string name="dlg_check_in_success">Check In was successful!</string>
     <string name="dlg_it_is_me">It is me</string>
-    <string name="dlg_user_login">User login: </string>
+    <string name="dlg_user_login">Name: </string>
     <string name="dlg_status">\nStatus: </string>
     <string name="map">Map</string>
     <string name="empty">empty</string>
