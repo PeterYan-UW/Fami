@@ -93,15 +93,13 @@ public class MapActivity extends FragmentActivity implements LocationListener {
         // Retrieve other users' locations from QuickBlox
         //
         QBLocationRequestBuilder getLocationsBuilder = new QBLocationRequestBuilder();
-        getLocationsBuilder.setPerPage(Constants.LOCATION_PER_PAGE);
-        getLocationsBuilder.setLastOnly();
         ArrayList<Integer> UserIds = DataHolder.getDataHolder().getAllMemberId();
+        getLocationsBuilder.setPerPage(UserIds.size());
+        Integer[] ids = UserIds.toArray(new Integer[UserIds.size()]);
     	Log.v("location", "loc request");
-        for (Integer i: UserIds) {
-        	Long longI = new Long(i);
-        	getLocationsBuilder.setUserId(longI);
-        }
-
+    	getLocationsBuilder.setUserIds(ids);
+    	getLocationsBuilder.setLastOnly();
+    	
         QBLocations.getLocations(getLocationsBuilder, new QBEntityCallbackImpl<ArrayList<QBLocation>>() {
             @Override
             public void onSuccess(ArrayList<QBLocation> qbLocations, Bundle bundle) {
@@ -159,7 +157,8 @@ public class MapActivity extends FragmentActivity implements LocationListener {
         Location location = locationManager.getLastKnownLocation(provider);
         if (location != null) {
         	//Log.v("pass"," test location");
-    		onLocationChanged(location);
+    		//onLocationChanged(location);
+        	googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()) , 15.0f) );
         }
         //Log.v("pass","test");
         
