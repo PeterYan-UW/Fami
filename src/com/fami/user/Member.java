@@ -5,9 +5,16 @@ public class Member {
 	private String fullName = "";
 	private String email = "";
 	private int id;
+	private int tag;
 	private String phone = "";
 	public String getPhone() {
 		return phone;
+	}
+	public void setTag(int tag) {
+		this.tag = tag;
+	}
+	public int getTag() {
+		return tag;
 	}
 	public void setPhone(String phone) {
 		this.phone= phone;

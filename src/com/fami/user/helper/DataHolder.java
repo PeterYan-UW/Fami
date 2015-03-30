@@ -17,6 +17,7 @@ public class DataHolder {
     private Family family;
     private int signInUserId;
     private List<QBFile> qbFileList;
+    private int FamiTag;
 
     public static synchronized DataHolder getDataHolder() {
         if (dataHolder == null) {
@@ -24,7 +25,12 @@ public class DataHolder {
         }
         return dataHolder;
     }
-
+    public void setFamiTag(int FamiTag) {
+    	this.FamiTag = FamiTag;
+    }
+    public int getFamiTag() {
+    	return FamiTag;
+    }
     public QBUser getSignInQbUser() {
         return signInQbUser;
     }

@@ -82,11 +82,11 @@ public class FamiInfo extends Fragment implements OnItemClickListener{
 }
 class single_member {
 	String fullname;
-	int idnumber;
+	String email;
 	String phone;
-	single_member(String fullname, int idnumber, String phone) {
+	single_member(String fullname, String email, String phone) {
 		this.fullname = fullname;
-		this.idnumber = idnumber;
+		this.email = email;
 		this.phone = phone;
 	}
 }
@@ -103,7 +103,7 @@ class famiinfoAdapter extends BaseAdapter {
 		while (IDs.hasNext()) {
 			int id = IDs.next();
 			if (id!=DataHolder.getDataHolder().getSignInUserId()) {
-				list.add(new single_member(members.get(id).getFullName(),id, members.get(id).getPhone()));
+				list.add(new single_member(members.get(id).getFullName(),members.get(id).getEmail(), members.get(id).getPhone()));
 			}
 		}
 	}
@@ -135,7 +135,7 @@ class famiinfoAdapter extends BaseAdapter {
 		TextView phone = (TextView) row.findViewById(R.id.famiinfo_phone);
 		single_member sm=list.get(i);
 		fullname.setText(sm.fullname);
-		email.setText(Integer.toString(sm.idnumber));
+		email.setText(sm.email);
 		phone.setText(sm.phone);
 		
 		return row;

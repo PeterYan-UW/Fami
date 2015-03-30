@@ -138,6 +138,7 @@ public class LogInActivity extends BaseActivity{
 	    	DataHolder.getDataHolder().setFamily(family);
 			HashMap<String, Object> fields = customObjects.get(0).getFields();
 	    	DataHolder.getDataHolder().setChatRoom((String) fields.get("dialog_id"));
+	    	DataHolder.getDataHolder().setFamiTag(Integer.valueOf((String)fields.get("Fami_Tag")));
 	    	ArrayList<Integer> usersIDs = (ArrayList<Integer>) fields.get("member_id");
 	    	QBPagedRequestBuilder requestBuilder = new QBPagedRequestBuilder();
 	        requestBuilder.setPage(1);
@@ -153,6 +154,7 @@ public class LogInActivity extends BaseActivity{
 			        	member.setFullName(user.getFullName());
 			        	member.setPhone(user.getPhone());
 			        	family.put(user.getId(), member);
+			    
 			        }
 			    	DataHolder.getDataHolder().setMenmber(family);
 	            }
@@ -203,7 +205,7 @@ public class LogInActivity extends BaseActivity{
         QBPagedRequestBuilder builder = new QBPagedRequestBuilder();
         builder.setPerPage(Constants.QB_PER_PAGE);
         builder.setPage(Constants.QB_PAGE);
-        QBContent.getFiles(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
+        QBContent.getTaggedList(builder, new QBEntityCallbackImpl<ArrayList<QBFile>>() {
             @Override
             public void onSuccess(ArrayList<QBFile> qbFiles, Bundle bundle) {
                 PhotoDataHolder.getDataHolder().setQbFileList(qbFiles);

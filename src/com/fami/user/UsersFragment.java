@@ -211,36 +211,55 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         final HashMap<Integer, Member> members = getUsers(usersAdapter.getSelected());
         final ArrayList<Integer> memberIDs = getUserIds(usersAdapter.getSelected());
         memberIDs.add(qbUser.getId());
-    	QBCustomObject family = new QBCustomObject();
+        final QBCustomObject family = new QBCustomObject();
     	family.putString("dialog_id", dialogId);
     	family.putArray("member_id", memberIDs);
-    	family.setClassName("Fami");
-    	QBCustomObjects.createObject(family, new QBEntityCallbackImpl<QBCustomObject>() {
-    	    @Override
-    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
-    	    	Family family = new Family();
-    	    	DataHolder.getDataHolder().setFamily(family);
-    	    	DataHolder.getDataHolder().setChatRoom(dialogId);
-    	    	DataHolder.getDataHolder().setMenmber(members);
-    	    	QBUser qbUser = DataHolder.getDataHolder().getSignInQbUser();
 
-                QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
-                    @Override
-                    public void onSuccess(QBUser qbUser, Bundle bundle) {
-                    	MainActivity.start(getActivity(), bundle);
-                    }
-                    @Override
-                    public void onError(List<String> strings) {
+    	
 
-                    }
-                });
-    	    }
-    	 
-    	    @Override
-    	    public void onError(List<String> errors) {
-    	 
-    	    }
-    	});
+        QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        QBCustomObjects.getObjects("Fami", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
+       			@Override
+       		    public void onSuccess(ArrayList<QBCustomObject> customObjects, Bundle params) {
+       				family.putInteger("Fami_Tag", customObjects.size()+1);
+       				family.setClassName("Fami");
+       				QBCustomObjects.createObject(family, new QBEntityCallbackImpl<QBCustomObject>() {
+       		    	    @Override
+       		    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+       		    	    	Family family = new Family();
+       		    	    	DataHolder.getDataHolder().setFamily(family);
+       		    	    	DataHolder.getDataHolder().setChatRoom(dialogId);
+       		    	    	DataHolder.getDataHolder().setMenmber(members);
+       		    	    	QBUser qbUser = DataHolder.getDataHolder().getSignInQbUser();
+
+       		                QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
+       		                    @Override
+       		                    public void onSuccess(QBUser qbUser, Bundle bundle) {
+       		                    	MainActivity.start(getActivity(), bundle);
+       		                    }
+       		                    @Override
+       		                    public void onError(List<String> strings) {
+
+       		                    }
+       		                });
+       		    	    }
+       		    	 
+       		    	    @Override
+       		    	    public void onError(List<String> errors) {
+       		    	 
+       		    	    }
+       		    	});
+       		    }
+
+       			@Override
+       		    public void onError(List<String> errors) {
+       				Log.v("wrong","wrong");
+       		    }
+       	});
+
+        //family.setClassName("Fami");
+    	
+    	
 	}
 
     private void addUserFami(final String dialogId){
