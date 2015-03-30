@@ -94,7 +94,12 @@
             android:name=".whereabouts.activities.MapActivity"
             android:label="@string/map"
             android:screenOrientation="portrait" />
-
+		<activity
+            android:name=".event.EventListActivity"
+            android:label="@string/title_activity_update" />
+		<activity
+            android:name=".event.EventDetailActivity"
+            android:label="@string/title_activity_update" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fami.R;
 import com.fami.chat.ChatActivity;
+import com.fami.event.EventListActivity;
 import com.fami.family.AddMemberActivity;
 import com.fami.photo.activities.GalleryActivity;
 import com.fami.setting.MainSetting;
@@ -76,6 +77,12 @@ public class MainActivity extends BaseActivity{
             	progressDialog.show();
             	Intent locIntent = new Intent(this, MapActivity.class);
             	startActivity(locIntent);
+                finish();
+                break;
+            case R.id.event:
+            	progressDialog.show();
+            	Intent eventIntent = new Intent(this, EventListActivity.class);
+            	startActivity(eventIntent);
                 finish();
                 break;
             	

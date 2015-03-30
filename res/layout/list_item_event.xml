@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="New Text"
+	        android:id="@+id/event_name"
+	        android:layout_alignParentTop="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentStart="true"
+	        android:textSize="20dp"
+	        android:layout_toLeftOf="@+id/add_calendar"
+	        android:layout_alignBottom="@+id/add_calendar"
+	        android:gravity="center_vertical"/>
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="New Text"
+	        android:id="@+id/event_date"
+	        android:textSize="20dp"
+	        android:gravity="center_vertical"
+	        android:layout_below="@+id/add_calendar"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentStart="true" />
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/count_down"
+	        android:textSize="20dp"
+	        android:gravity="center_vertical"
+	        android:layout_below="@+id/add_calendar"
+	        android:layout_alignRight="@+id/event_info"
+	        android:layout_alignParentRight="true" />
+    	<Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to calendar"
+            android:id="@+id/add_calendar"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="onDoneButtonClick" />
+    	<TextView
+	        android:id="@+id/event_id"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/event_name"
+	        android:text="Small Text"
+	        android:visibility="invisible"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+</RelativeLayout>
