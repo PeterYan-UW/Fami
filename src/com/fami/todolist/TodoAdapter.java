@@ -53,6 +53,7 @@ public class TodoAdapter extends BaseAdapter {
             holder.task_id = (TextView) convertView.findViewById(R.id.taskID);
             holder.done_btn = (Button) convertView.findViewById(R.id.done_task);
             holder.take_btn = (Button) convertView.findViewById(R.id.take_task);
+            holder.delete_btn = (Button) convertView.findViewById(R.id.delete_task);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -64,14 +65,22 @@ public class TodoAdapter extends BaseAdapter {
             if (currentMode.equals("done")){
                 holder.done_btn.setVisibility(View.INVISIBLE);
                 holder.take_btn.setVisibility(View.INVISIBLE);
+                if (currentUser == DataHolder.getDataHolder().getSignInUserId()){
+                    holder.delete_btn.setVisibility(View.VISIBLE);
+                }
+                else{
+                    holder.delete_btn.setVisibility(View.INVISIBLE);
+                }
             }
             else if (currentUser == DataHolder.getDataHolder().getSignInUserId()){
                 holder.done_btn.setVisibility(View.VISIBLE);
                 holder.take_btn.setVisibility(View.INVISIBLE);
+                holder.delete_btn.setVisibility(View.INVISIBLE);
             }
             else{
                 holder.done_btn.setVisibility(View.INVISIBLE);
-                holder.take_btn.setVisibility(View.VISIBLE);           	
+                holder.take_btn.setVisibility(View.VISIBLE); 
+                holder.delete_btn.setVisibility(View.INVISIBLE);          	
             }
         }
         return convertView;
@@ -82,5 +91,6 @@ public class TodoAdapter extends BaseAdapter {
         TextView task_id;
         Button done_btn;
         Button take_btn;
+        Button delete_btn;
     }
 }

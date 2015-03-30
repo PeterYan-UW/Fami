@@ -103,6 +103,18 @@ public class TodolistActivity extends FragmentActivity {
     	});
 	}
 	
+	public void onDeleteButtonClick(View view) {
+		View v = (View) view.getParent();
+		TextView taskTextView = (TextView) v.findViewById(R.id.taskID);
+		String task_position = taskTextView.getText().toString();
+		QBCustomObject task = (QBCustomObject) doneAdapter.getItem(Integer.parseInt(task_position));
+		QBCustomObjects.deleteObject(task, new QBEntityCallbackImpl() {
+    	    @Override
+    	    public void onSuccess() {
+    	    	updateUI(currentMode);
+    	    }
+    	});
+	}
 	public void onTakeButtonClick(View view) {
 		View v = (View) view.getParent();
 		TextView taskTextView = (TextView) v.findViewById(R.id.taskID);
