@@ -105,4 +105,10 @@ public class SignUpActivity extends BaseActivity {
             }
         });
     }
+	@Override
+	public void onBackPressed(){
+		Intent logout = new Intent(this, LogInActivity.class);
+		startActivity(logout);
+		finish();
+	}
 }

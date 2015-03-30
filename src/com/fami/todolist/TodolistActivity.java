@@ -3,6 +3,7 @@ package com.fami.todolist;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,8 @@ public class TodolistActivity extends FragmentActivity {
 	private TodoAdapter todoAdapter;
 	private ListView done_list;
 	private TodoAdapter doneAdapter;
+	private Button todo;
+	private Button done;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class TodolistActivity extends FragmentActivity {
 		todo_list = (ListView) findViewById(R.id.todolist_todo);
 		done_list = (ListView) findViewById(R.id.todolist_done);
     	done_list.setVisibility(View.INVISIBLE);
+    	todo = (Button) findViewById(R.id.todolist);
+    	done = (Button) findViewById(R.id.donelist);
 		updateUI(currentMode);
 	}
 
@@ -49,7 +54,6 @@ public class TodolistActivity extends FragmentActivity {
     	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
     	requestBuilder.eq("owner", TodoUserId);
 		QBCustomObjects.getObjects("Todo", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>() {
-		    @SuppressWarnings("unchecked")
 			@Override
 		    public void onSuccess(ArrayList<QBCustomObject> customObjects, Bundle params) {
 		    	setTodoAdapter(customObjects);
@@ -101,6 +105,18 @@ public class TodolistActivity extends FragmentActivity {
     	});
 	}
 	
+	public void onDeleteButtonClick(View view) {
+		View v = (View) view.getParent();
+		TextView taskTextView = (TextView) v.findViewById(R.id.taskID);
+		String task_position = taskTextView.getText().toString();
+		QBCustomObject task = (QBCustomObject) doneAdapter.getItem(Integer.parseInt(task_position));
+		QBCustomObjects.deleteObject(task, new QBEntityCallbackImpl<QBCustomObject>() {
+    	    @Override
+    	    public void onSuccess() {
+    	    	updateUI(currentMode);
+    	    }
+    	});
+	}
 	public void onTakeButtonClick(View view) {
 		View v = (View) view.getParent();
 		TextView taskTextView = (TextView) v.findViewById(R.id.taskID);
@@ -160,6 +176,8 @@ public class TodolistActivity extends FragmentActivity {
         		break;
             case R.id.todolist:
             	currentMode = "todo";
+            	todo.setFocusable(true);
+            	done.setFocusable(false);
             	todo_list.setVisibility(View.VISIBLE);
             	done_list.setVisibility(View.INVISIBLE);
                 break;

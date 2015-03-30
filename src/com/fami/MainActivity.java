@@ -6,9 +6,12 @@ import java.util.List;
 
 import com.fami.R;
 import com.fami.chat.ChatActivity;
+import com.fami.event.EventListActivity;
+import com.fami.family.AddMemberActivity;
 import com.fami.photo.activities.GalleryActivity;
 import com.fami.setting.MainSetting;
 import com.fami.todolist.TodolistActivity;
+import com.fami.user.activities.LogInActivity;
 import com.fami.user.activities.UpdateActivity;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
@@ -93,7 +96,6 @@ public class MainActivity extends BaseActivity{
         		finish();
                 break;
             case R.id.todolist:
-                progressDialog.show();
                 Intent intent = new Intent(this, TodolistActivity.class);
                 startActivity(intent);
                 finish();
@@ -101,14 +103,17 @@ public class MainActivity extends BaseActivity{
             case R.id.sign_up:
             	break;
             case R.id.album:
-            	progressDialog.show();
             	startGalleryActivity();
             	finish();
                 break;
             case R.id.location:
-            	progressDialog.show();
             	Intent locIntent = new Intent(this, MapActivity.class);
             	startActivity(locIntent);
+                finish();
+                break;
+            case R.id.event:
+            	Intent eventIntent = new Intent(this, EventListActivity.class);
+            	startActivity(eventIntent);
                 finish();
                 break;
             	
@@ -124,6 +129,12 @@ public class MainActivity extends BaseActivity{
 	private void startGalleryActivity() {
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(MainActivity.this,LogInActivity.class);
+        startActivity(i);
         finish();
     }
 }

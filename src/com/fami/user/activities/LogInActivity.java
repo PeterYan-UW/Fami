@@ -65,7 +65,6 @@ public class LogInActivity extends BaseActivity{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_button:
-                progressDialog.show();
 
                 // Sign in application with user
 

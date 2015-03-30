@@ -21,6 +21,7 @@ import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.request.QBPagedRequestBuilder;
 import com.quickblox.core.request.QBRequestGetBuilder;
+import com.quickblox.core.request.QBRequestUpdateBuilder;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.chat.QBChatService;
@@ -62,30 +63,64 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
         createChatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	if(DataHolder.getDataHolder().getFamily() == null){
+            		((ApplicationSingleton)getActivity().getApplication()).addDialogsUsers(usersAdapter.getSelected());
 
-                ((ApplicationSingleton)getActivity().getApplication()).addDialogsUsers(usersAdapter.getSelected());
+                    // Create new group dialog
+                    //
+                    QBDialog dialogToCreate = new QBDialog();
+                    dialogToCreate.setName(usersListToChatName());
+                    dialogToCreate.setType(QBDialogType.GROUP);
+                    ArrayList<Integer> occupantsUsers = getUserIds(usersAdapter.getSelected());
+                    occupantsUsers.add(DataHolder.getDataHolder().getSignInUserId());
+                    dialogToCreate.setOccupantsIds(occupantsUsers);
 
-                // Create new group dialog
-                //
-                QBDialog dialogToCreate = new QBDialog();
-                dialogToCreate.setName(usersListToChatName());
-                dialogToCreate.setType(QBDialogType.GROUP);
-                ArrayList<Integer> occupantsUsers = getUserIds(usersAdapter.getSelected());
-                occupantsUsers.add(DataHolder.getDataHolder().getSignInUserId());
-                dialogToCreate.setOccupantsIds(occupantsUsers);
+                    QBChatService.getInstance().getGroupChatManager().createDialog(dialogToCreate, new QBEntityCallbackImpl<QBDialog>() {
+                        @Override
+                        public void onSuccess(QBDialog dialog, Bundle args) {
+                        	updateUserFami(dialog.getDialogId());
+                        }
 
-                QBChatService.getInstance().getGroupChatManager().createDialog(dialogToCreate, new QBEntityCallbackImpl<QBDialog>() {
-                    @Override
-                    public void onSuccess(QBDialog dialog, Bundle args) {
-                    	updateUserFami(dialog.getDialogId());
-                    }
+                        @Override
+                        public void onError(List<String> errors) {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                            dialog.setMessage("dialog creation errors: " + errors).create().show();
+                        }
+                    });
+            	}
+            	else{
+            		((ApplicationSingleton)getActivity().getApplication()).addDialogsUsers(usersAdapter.getSelected());
 
-                    @Override
-                    public void onError(List<String> errors) {
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                        dialog.setMessage("dialog creation errors: " + errors).create().show();
-                    }
-                });
+					// Get group dialog
+                    //
+                    final ArrayList<Integer> occupantsUsers = getUserIds(usersAdapter.getSelected());
+                    QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+                    requestBuilder.eq("_id", DataHolder.getDataHolder().getChatRoom());
+                 
+					QBChatService.getChatDialogs(QBDialogType.GROUP, requestBuilder, new QBEntityCallbackImpl<ArrayList<QBDialog>>(){
+						@Override
+						public void onSuccess(java.util.ArrayList<QBDialog> result, Bundle params) {
+							QBDialog dialog = result.get(0);
+							ArrayList<Integer> users = dialog.getOccupants();
+							users.addAll(occupantsUsers);
+
+		                    QBRequestUpdateBuilder request = new QBRequestUpdateBuilder();
+		                    request.push("occupants_ids", users);
+							QBChatService.getInstance().getGroupChatManager().updateDialog(dialog, request , new QBEntityCallbackImpl<QBDialog>() {
+		                        @Override
+		                        public void onSuccess(QBDialog dialog, Bundle args) {
+		                        	addUserFami(dialog.getDialogId());
+		                        }
+
+		                        @Override
+		                        public void onError(List<String> errors) {
+		                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		                            dialog.setMessage("dialog creation errors: " + errors).create().show();
+		                        }
+		                    });
+						};
+					});            		
+            	}
             }
         });
 
@@ -227,6 +262,36 @@ public class UsersFragment extends Fragment implements QBEntityCallback<ArrayLis
     	
 	}
 
+    private void addUserFami(final String dialogId){
+    	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+    	final HashMap<Integer, Member> members = getUsers(usersAdapter.getSelected());
+        requestBuilder.ctn("dialog_id", dialogId);  
+    	QBCustomObjects.getObjects("Fami", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>(){
+    		@Override
+    	    public void onSuccess(ArrayList<QBCustomObject> result, Bundle bundle) {
+    			QBCustomObject family = result.get(0);
+    			QBRequestUpdateBuilder request = new QBRequestUpdateBuilder();
+    			ArrayList<Integer> member_ids = (ArrayList<Integer>) family.getFields().get("member_id");
+    			member_ids.addAll(members.keySet());
+    			Log.v("member id are: ", member_ids.toString());
+    	        request.push("member_id", member_ids);
+    	    	QBCustomObjects.updateObject(family, request, new QBEntityCallbackImpl<QBCustomObject>() {
+    	    	    @Override
+    	    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+    	    	    	DataHolder.getDataHolder().addMenmber(members);
+    	    	    	MainActivity.start(getActivity(), bundle);
+    	    	    }
+    	    	 
+    	    	    @Override
+    	    	    public void onError(List<String> errors) {
+    	    	 
+    	    	    }
+    	    	});
+    		}
+    	});
+    	
+	}
+    
 	private void loadNextPage() {
         ++currentPage;
 

@@ -15,12 +15,16 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.family.AddMemberActivity;
+import com.fami.setting.MainSetting;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.core.request.QBRequestGetBuilder;
+
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 
@@ -63,6 +67,9 @@ public class ChatActivity extends Activity {
     public void onBackPressed() {
         try {
             chat.release();
+            Intent i = new Intent(ChatActivity.this,MainActivity.class);
+            startActivity(i);
+            finish();
         } catch (XMPPException e) {
             Log.e(TAG, "failed to release chat", e);
         }
@@ -181,5 +188,4 @@ public class ChatActivity extends Activity {
     private void scrollDown() {
         messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
-
 }

@@ -14,10 +14,11 @@ import java.util.List;
 
 import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.setting.MainSetting;
 import com.fami.user.UsersFragment;
 import com.fami.user.activities.LogInActivity;
 
-public class CreateFamiActivity extends ActionBarActivity {
+public class AddMemberActivity extends ActionBarActivity {
 
     private SectionsPagerAdapter sectionsPagerAdapter;
     private ViewPager viewPager;
@@ -25,7 +26,7 @@ public class CreateFamiActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family_create);
+        setContentView(R.layout.activity_family_add);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -73,7 +74,7 @@ public class CreateFamiActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(CreateFamiActivity.this, CreateFami.class);
+        Intent i = new Intent(AddMemberActivity.this,MainSetting.class);
         startActivity(i);
         finish();
     }
