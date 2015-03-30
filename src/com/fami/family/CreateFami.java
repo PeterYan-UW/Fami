@@ -27,7 +27,7 @@ public class CreateFami extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_fami);
+		setContentView(R.layout.activity_no_fami);
 	}
 
 	public void onClick(View view) {

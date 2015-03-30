@@ -139,11 +139,7 @@ class famiinfoAdapter extends BaseAdapter {
 		phone.setText(sm.phone);
 		
 		return row;
-	}
-	
-	
-	
-	
+	}	
 }
 
 

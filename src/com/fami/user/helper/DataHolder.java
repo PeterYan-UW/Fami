@@ -80,6 +80,9 @@ public class DataHolder {
 	public void setMenmber(HashMap<Integer, Member> member){
 		family.setMember(member);
 	}
+	public void addMenmber(HashMap<Integer, Member> member){
+		family.addMember(member);
+	}
 	public String getChatRoom(){
 		return family.getChatRoom();
 	}

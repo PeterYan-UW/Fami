@@ -1,6 +1,7 @@
 package com.fami.setting;
 import com.fami.MainActivity;
 import com.fami.R;
+import com.fami.family.AddMemberActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -38,6 +39,9 @@ public class MainSetting extends FragmentActivity {
         switch (view.getId()) {
 	        case R.id.add_member:
 	        	Log.v("add member","add member");
+	    		Intent addMember = new Intent(this, AddMemberActivity.class);
+	    		startActivity(addMember);
+	    		finish();
 	            break;
 	        case R.id.leave_fami:
 	        	AlertDialog.Builder leavefami = new AlertDialog.Builder(this);

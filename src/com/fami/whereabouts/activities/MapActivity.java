@@ -243,9 +243,10 @@ public class MapActivity extends FragmentActivity implements LocationListener {
             }
         };
     }
-    
+    @Override
     public void onBackPressed(){
     	Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
 	}
 }

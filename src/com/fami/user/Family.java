@@ -27,4 +27,7 @@ public class Family {
 		ids.addAll(member.keySet());
 		return ids;
 	}
+	public void addMember(HashMap<Integer, Member> member) {
+		this.member.putAll(member);		
+	}
 }

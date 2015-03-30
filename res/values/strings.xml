@@ -49,5 +49,6 @@
     <string name="map">Map</string>
     <string name="empty">empty</string>
     <string name="title_activity_test">Test</string>
+    <string name="add_member">Add Member</string>
 
 </resources>
