@@ -14,10 +14,13 @@ import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBDialog;
 import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.core.request.QBRequestGetBuilder;
 import com.quickblox.core.request.QBRequestUpdateBuilder;
 import com.quickblox.customobjects.QBCustomObjects;
 import com.quickblox.customobjects.model.QBCustomObject;
+import com.quickblox.users.QBUsers;
+import com.quickblox.users.model.QBUser;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -128,9 +131,33 @@ public class MainSetting extends FragmentActivity {
     	    	QBCustomObjects.updateObject(family, request, new QBEntityCallbackImpl<QBCustomObject>() {
     	    	    @Override
     	    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
-    	    	            Intent i = new Intent(MainSetting.this,LogInActivity.class);
-    	    	            startActivity(i);
-    	    	            finish();
+    	    			QBUser qbUser = new QBUser();
+    	    			qbUser.setId(DataHolder.getDataHolder().getSignInUserId());
+    	    			qbUser.setLogin(DataHolder.getDataHolder().getSignInUserLogin());
+    	    			qbUser.setPassword(DataHolder.getDataHolder().getSignInUserOldPassword());
+    	    	        qbUser.setOldPassword(DataHolder.getDataHolder().getSignInUserOldPassword());
+    	    	        qbUser.setFullName(DataHolder.getDataHolder().getSignInUserFullName());
+    	    	        qbUser.setEmail(DataHolder.getDataHolder().getSignInUserEmail());
+    	    	        qbUser.setPhone(DataHolder.getDataHolder().getSignInUserPhone());
+    	    	        qbUser.setWebsite(DataHolder.getDataHolder().getSignInUserWebSite());
+    	    	       
+    	    	        StringifyArrayList<String> tagList = new StringifyArrayList<String>();
+    	    	        tagList.add("unknow");
+    	    	        qbUser.setTags(tagList);
+    	    	        
+    	    	        QBUsers.updateUser(qbUser, new QBEntityCallbackImpl<QBUser>() {
+    	    	            @Override
+    	    	            public void onSuccess(QBUser qbUser, Bundle bundle) {
+    	    	                DataHolder.getDataHolder().setSignInQbUser(qbUser);
+        	    	            Intent i = new Intent(MainSetting.this,LogInActivity.class);
+        	    	            startActivity(i);
+        	    	            finish();
+    	    	            }
+    	    	            @Override
+    	    	            public void onError(List<String> strings) {
+    	    	            	Log.v("wrong","settag");
+    	    	            }
+    	    	        });
     	    	    }
     	    	 
     	    	    @Override

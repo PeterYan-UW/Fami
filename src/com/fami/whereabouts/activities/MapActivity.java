@@ -1,7 +1,5 @@
 package com.fami.whereabouts.activities;
 
-import java.util.Iterator;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,15 +24,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.result.Result;
-import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.location.QBLocations;
 import com.quickblox.location.model.QBLocation;
 import com.quickblox.location.request.QBLocationRequestBuilder;
-import com.quickblox.location.result.QBLocationPagedResult;
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.user.helper.DataHolder;
@@ -157,7 +150,7 @@ public class MapActivity extends FragmentActivity implements LocationListener {
         Location location = locationManager.getLastKnownLocation(provider);
         if (location != null) {
         	//Log.v("pass"," test location");
-    		//onLocationChanged(location);
+    		onLocationChanged(location);
         	googleMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()) , 15.0f) );
         }
         //Log.v("pass","test");
