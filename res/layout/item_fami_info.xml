@@ -38,7 +38,21 @@
         android:layout_marginTop="80dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/telephoneicon" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/emailicon" />
 
 </RelativeLayout>

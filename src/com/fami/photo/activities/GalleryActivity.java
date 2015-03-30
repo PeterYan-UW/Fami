@@ -17,6 +17,7 @@ import com.fami.photo.helper.PhotoDataHolder;
 import com.fami.photo.utils.GetImageFileTask;
 import com.fami.photo.utils.ImageHelper;
 import com.fami.photo.utils.OnGetImageFileListener;
+import com.fami.user.helper.DataHolder;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.content.QBContent;
 import com.quickblox.content.model.QBFile;
@@ -79,7 +80,7 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
     private void initGalleryView() {
         galleryAdapter = new GalleryAdapter(getApplicationContext());
         galleryGridView.setAdapter(galleryAdapter);
-        //galleryGridView.setOnItemClickListener(this);
+        galleryGridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
 
         // Upload new file
         //
-        QBContent.uploadFileTask(imageFile, PUBLIC_ACCESS_TRUE, null, new QBEntityCallbackImpl<QBFile>() {
+        QBContent.uploadFileTask(imageFile, PUBLIC_ACCESS_TRUE, "fami"+Integer.toString(DataHolder.getDataHolder().getFamiTag()), new QBEntityCallbackImpl<QBFile>() {
             @Override
             public void onSuccess(QBFile qbFile, Bundle bundle) {
                 PhotoDataHolder.getDataHolder().addQbFile(qbFile);
