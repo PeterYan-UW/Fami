@@ -43,7 +43,15 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:onClick="onDoneButtonClick" />
+            android:onClick="onAddtoCalender" />
+    	<TextView
+	        android:id="@+id/event_repeat"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/event_name"
+	        android:text="Small Text"
+	        android:visibility="invisible"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
     	<TextView
 	        android:id="@+id/event_id"
 	        android:layout_width="wrap_content"

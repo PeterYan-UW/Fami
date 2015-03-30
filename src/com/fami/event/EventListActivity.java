@@ -1,10 +1,12 @@
 package com.fami.event;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -53,7 +55,16 @@ public class EventListActivity extends FragmentActivity {
 		    }
 		});
 	}
-	
+	public void onAddtoCalender(View view) {
+		View v = (View) view.getParent();
+		TextView EventName = (TextView) v.findViewById(R.id.event_name);
+		String event_name = EventName.getText().toString();
+		TextView EventDate = (TextView) v.findViewById(R.id.event_date);
+		String event_date = EventDate.getText().toString();
+		TextView EventRepeat = (TextView) v.findViewById(R.id.event_repeat);
+		String event_repeat = EventRepeat.getText().toString();
+		
+	}
 	protected void setEventAdapter(ArrayList<QBCustomObject> customObjects) {
 		ArrayList<QBCustomObject> event_item = new ArrayList<QBCustomObject>();
 		for (QBCustomObject item : customObjects){

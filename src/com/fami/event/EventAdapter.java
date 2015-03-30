@@ -1,14 +1,10 @@
 package com.fami.event;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.fami.R;
-import com.fami.user.helper.DataHolder;
 import com.quickblox.customobjects.model.QBCustomObject;
 
 import android.content.Context;
@@ -17,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class EventAdapter extends BaseAdapter {
@@ -55,6 +50,7 @@ public class EventAdapter extends BaseAdapter {
             holder.event_date = (TextView) convertView.findViewById(R.id.event_date);
             holder.count_down = (TextView) convertView.findViewById(R.id.count_down);
             holder.event_id = (TextView) convertView.findViewById(R.id.event_id);
+            holder.event_repeat = (TextView) convertView.findViewById(R.id.event_repeat);            
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -63,6 +59,7 @@ public class EventAdapter extends BaseAdapter {
         if (task != null) {
             holder.event_name.setText(task.getFields().get("event_name").toString());
             int date = Integer.valueOf((String) task.getFields().get("event_date"));
+            int repeat = Integer.valueOf((String) task.getFields().get("event_repeat"));
             int year = date/10000;
             int month = date%10000/100;
             int day = date%100;
@@ -74,6 +71,7 @@ public class EventAdapter extends BaseAdapter {
             holder.event_date.setText(year+"/"+month+"/"+day);
             holder.count_down.setText(getCountDown(today, cl));
             holder.event_id.setText(Integer.toString(position));
+            holder.event_repeat.setText(Integer.toString(repeat));
         }
         return convertView;
     }
@@ -107,5 +105,6 @@ public class EventAdapter extends BaseAdapter {
         TextView event_date;
         TextView count_down;
         TextView event_id;
+        TextView event_repeat;
     }
 }
