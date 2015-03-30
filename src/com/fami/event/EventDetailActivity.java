@@ -164,6 +164,56 @@ public class EventDetailActivity extends Activity{
             	QBCustomObjects.createObject(event, new QBEntityCallbackImpl<QBCustomObject>() {
 		    	    @Override
 		    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+		    	    	String calId = "";
+                        Cursor userCursor = getContentResolver().query(Uri.parse(calanderURL), null,
+                                null, null, null);
+                        if(userCursor.getCount() > 0){
+                            userCursor.moveToFirst();
+                            calId = userCursor.getString(userCursor.getColumnIndex("_id"));
+
+                        }
+                        ContentValues events = new ContentValues();
+                        events.put("title", event_name);
+                        events.put("description", event_description);
+                        events.put("calendar_id",calId);
+
+                        Calendar mCalendar = Calendar.getInstance();
+                        mCalendar.set(Task_year,Task_month - 1,Task_day);
+                        mCalendar.set(Calendar.HOUR_OF_DAY,start_hours);
+                        mCalendar.set(Calendar.MINUTE,start_min);
+                        long start = mCalendar.getTime().getTime();
+                        mCalendar.set(Calendar.HOUR_OF_DAY,end_hours);
+                        mCalendar.set(Calendar.MINUTE,end_min);
+                        long end = mCalendar.getTime().getTime();
+
+                        events.put("dtstart", start);
+                        events.put("dtend", end);
+                        events.put("hasAlarm",1);
+                        events.put("eventTimezone", Time.getCurrentTimezone());
+                        
+                        if (option.equals("Every Year")){
+                        	events.put("rrule", "FREQ=YEARLY");
+                        }
+                        else if (option.equals("Every Month")){
+                        	events.put("rrule", "FREQ=MONTHLY");
+                        }
+                        else if (option.equals("Every Week")){
+                        	events.put("rrule", "FREQ=WEEKLY");
+                        }
+                        else if (option.equals("Every day")){
+                        	events.put("rrule", "FREQ=DAILY");
+                        }
+                        else if (option.equals("None")){
+                        }
+
+                        Uri newEvent = getContentResolver().insert(Uri.parse(calanderEventURL), events);
+                        long id = Long.parseLong( newEvent.getLastPathSegment() );
+                        ContentValues values1 = new ContentValues();
+                        values1.put( "event_id", id );
+                        values1.put( "method", 1 );
+                        values1.put( "minutes", 10 );
+                        getContentResolver().insert(Uri.parse(calanderRemiderURL), values1);
+                        Toast.makeText(EventDetailActivity.this, "Successful", Toast.LENGTH_LONG).show();
 		    	    	backToEventList();
 		    	    }
 		    	 
