@@ -16,12 +16,16 @@ import java.util.Locale;
 
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Activity;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.*;
 import android.widget.DatePicker.OnDateChangedListener;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,10 +43,16 @@ public class EventDetailActivity extends Activity{
     private DatePicker datePicker;
     //private TimePicker timePicker;
     private EditText Event_name;
+    private EditText Event_description;
     private int Task_year;
     private int Task_month;
     private int Task_day;
+    private int start_hours;
+    private int start_min;
+    private int end_hours;
+    private int end_min;
     private String event_name;
+    private String event_description;
     private int event_date;
     private int event_repeat;
     private String option;
@@ -60,21 +70,24 @@ public class EventDetailActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_detail);
         Event_name = (EditText) findViewById(R.id.enter_event);
+        Event_description = (EditText) findViewById(R.id.enter_event_description);
     }
 
     public void eventOnClick(View view) {
+        int y,m,d,h,min;
+        Calendar cal=Calendar.getInstance();
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        d = cal.get(Calendar.DATE);
+        h = cal.get(Calendar.HOUR_OF_DAY);
+        min = cal.get(Calendar.MINUTE);
         switch (view.getId()) {
             case R.id.btnDatePickerDialog:
-                int y,m,d;
-                Calendar cal=Calendar.getInstance();
-                y = cal.get(Calendar.YEAR);
-                m = cal.get(Calendar.MONTH);
-                d = cal.get(Calendar.DATE);
                 DatePickerDialog datePicker=new DatePickerDialog(EventDetailActivity.this, new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                                   int dayOfMonth) {
-                        Toast.makeText(EventDetailActivity.this, year+"year "+ monthOfYear+"month "+dayOfMonth+"day", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EventDetailActivity.this, year+"year "+ (monthOfYear+1)+"month "+dayOfMonth+"day", Toast.LENGTH_SHORT).show();
                         Task_year = year;
                         Task_month = monthOfYear + 1;
                         Task_day = dayOfMonth;
@@ -86,35 +99,40 @@ public class EventDetailActivity extends Activity{
                         }, y, m, d);
                 datePicker.show();
                 break;
+            case R.id.btnTimePickerDialog1:
+                TimePickerDialog time = new TimePickerDialog(EventDetailActivity.this, new OnTimeSetListener() {
 
-            case R.id.add_event:
-            	event_name = Event_name.getText().toString();
-            	QBCustomObject event = new QBCustomObject();
-            	event.put("event_name", event_name);
-            	event.put("event_date", event_date);
-            	event.put("event_repeat", event_repeat);
-            	event.put("dialog_id", DataHolder.getDataHolder().getChatRoom());
-            	event.setClassName("Event");
-            	QBCustomObjects.createObject(event, new QBEntityCallbackImpl<QBCustomObject>() {
-		    	    @Override
-		    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
-		    	    	backToEventList();
-		    	    }
-		    	 
-		    	    @Override
-		    	    public void onError(List<String> errors) {
-		    	 
-		    	    }
-		    	});
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(EventDetailActivity.this, hourOfDay+"hour "+minute+"minute", Toast.LENGTH_SHORT).show();
+                        start_hours = hourOfDay;
+                        start_min = minute;
+                        showstarttime(start_hours,start_min);
+                    }
+                }, h, min, true);
+                time.show();
                 break;
-            case R.id.cancel_add_event:
-            	backToEventList();
+            case R.id.btnTimePickerDialog2:
+                TimePickerDialog time1 =new TimePickerDialog(EventDetailActivity.this, new OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(EventDetailActivity.this, hourOfDay+"hour "+minute+"minute", Toast.LENGTH_SHORT).show();
+                        end_hours = hourOfDay;
+                        end_min = minute;
+                        showendtime(end_hours, end_min);
+                    }
+                }, h, min, true);
+                time1.show();
                 break;
+                
             case R.id.event_choose:
                 AlertDialog.Builder builder = new AlertDialog.Builder(EventDetailActivity.this);
                 builder.setTitle("Choose");
                 builder.setIcon(android.R.drawable.ic_dialog_info);
-                final String[] r = {"Every Year", "Every Month", "Every Week", "None"};
+                final String[] r = {"Every Year", "Every Month", "Every Week", "Every day","None"};
                 builder.setSingleChoiceItems(r, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which){
@@ -132,6 +150,82 @@ public class EventDetailActivity extends Activity{
                     }
                 });
                 builder.show();
+                break;
+
+            case R.id.add_event:
+            	event_name = Event_name.getText().toString();
+            	event_description = Event_description.getText().toString();
+            	QBCustomObject event = new QBCustomObject();
+            	event.put("event_name", event_name);
+            	event.put("event_date", event_date);
+            	event.put("event_repeat", event_repeat);
+            	event.put("dialog_id", DataHolder.getDataHolder().getChatRoom());
+            	event.setClassName("Event");
+            	QBCustomObjects.createObject(event, new QBEntityCallbackImpl<QBCustomObject>() {
+		    	    @Override
+		    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+		    	    	String calId = "";
+                        Cursor userCursor = getContentResolver().query(Uri.parse(calanderURL), null,
+                                null, null, null);
+                        if(userCursor.getCount() > 0){
+                            userCursor.moveToFirst();
+                            calId = userCursor.getString(userCursor.getColumnIndex("_id"));
+
+                        }
+                        ContentValues events = new ContentValues();
+                        events.put("title", event_name);
+                        events.put("description", event_description);
+                        events.put("calendar_id",calId);
+
+                        Calendar mCalendar = Calendar.getInstance();
+                        mCalendar.set(Task_year,Task_month - 1,Task_day);
+                        mCalendar.set(Calendar.HOUR_OF_DAY,start_hours);
+                        mCalendar.set(Calendar.MINUTE,start_min);
+                        long start = mCalendar.getTime().getTime();
+                        mCalendar.set(Calendar.HOUR_OF_DAY,end_hours);
+                        mCalendar.set(Calendar.MINUTE,end_min);
+                        long end = mCalendar.getTime().getTime();
+
+                        events.put("dtstart", start);
+                        events.put("dtend", end);
+                        events.put("hasAlarm",1);
+                        events.put("eventTimezone", Time.getCurrentTimezone());
+                        
+                        if (option.equals("Every Year")){
+                        	events.put("rrule", "FREQ=YEARLY");
+                        }
+                        else if (option.equals("Every Month")){
+                        	events.put("rrule", "FREQ=MONTHLY");
+                        }
+                        else if (option.equals("Every Week")){
+                        	events.put("rrule", "FREQ=WEEKLY");
+                        }
+                        else if (option.equals("Every day")){
+                        	events.put("rrule", "FREQ=DAILY");
+                        }
+                        else if (option.equals("None")){
+                        }
+
+                        Uri newEvent = getContentResolver().insert(Uri.parse(calanderEventURL), events);
+                        long id = Long.parseLong( newEvent.getLastPathSegment() );
+                        ContentValues values1 = new ContentValues();
+                        values1.put( "event_id", id );
+                        values1.put( "method", 1 );
+                        values1.put( "minutes", 10 );
+                        getContentResolver().insert(Uri.parse(calanderRemiderURL), values1);
+                        Toast.makeText(EventDetailActivity.this, "Successful", Toast.LENGTH_LONG).show();
+
+		    	    	backToEventList();
+		    	    }
+		    	 
+		    	    @Override
+		    	    public void onError(List<String> errors) {
+		    	 
+		    	    }
+		    	});
+                break;
+            case R.id.cancel_add_event:
+            	backToEventList();
                 break;
 
             default:
@@ -153,12 +247,23 @@ public class EventDetailActivity extends Activity{
         else if (option.equals("Every Week")){
         	event_repeat = 7;
         }
+        else if (option.equals("Every day")){
+        	event_repeat = 1;
+        }
         else if (option.equals("None")){
         	event_repeat = 0;
         }
 
     }
+    private void showendtime(int end_hours, int end_min) {
+        TextView show=(TextView)findViewById(R.id.show3);
+        show.setText(""+end_hours+":"+ end_min +".");
+    }
 
+    private void showstarttime(int start_hours, int start_min) {
+        TextView show=(TextView)findViewById(R.id.show2);
+        show.setText(""+start_hours+":"+ start_min +".");
+    }
     private void showDate(int year,int month,int day)
     {
         TextView show=(TextView)findViewById(R.id.show);

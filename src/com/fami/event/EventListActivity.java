@@ -7,6 +7,8 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -26,6 +28,7 @@ import com.quickblox.customobjects.model.QBCustomObject;
 public class EventListActivity extends FragmentActivity {
 	private ListView event_list;
 	private EventAdapter eventAdapter;
+	private static String calanderURL = "content://com.android.calendar/calendars";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,16 @@ public class EventListActivity extends FragmentActivity {
         Intent intent = new Intent(this, EventDetailActivity.class);
         startActivity(intent);
         finish();
+	}
+	
+	public void GetUser(View view){
+		Cursor userCursor = getContentResolver().query(Uri.parse(calanderURL), null,
+                null, null, null);
+        if(userCursor.getCount() > 0) {
+            userCursor.moveToFirst();
+            String userName = userCursor.getString(userCursor.getColumnIndex("name"));
+            Toast.makeText(this, userName, Toast.LENGTH_LONG).show();
+        }
 	}
 	
 	@Override

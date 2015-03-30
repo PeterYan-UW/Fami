@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title" />
     <EditText
         android:id="@+id/enter_event"
         android:layout_width="match_parent"
@@ -13,7 +16,20 @@
 
         <requestFocus />
     </EditText>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description" />
+    <EditText
+        android:id="@+id/enter_event_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
 
+        <requestFocus />
+    </EditText>
+    
     <Button
         android:id="@+id/btnDatePickerDialog"
         android:layout_width="fill_parent"
@@ -26,13 +42,54 @@
         android:layout_height="wrap_content"
         android:text="Your Date"
         android:id="@+id/evnet_textView" />
-
     <TextView
         android:id="@+id/show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10" >
     </TextView>
+	<Button
+        android:id="@+id/btnTimePickerDialog1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="start time"
+        android:onClick="eventOnClick"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Time"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/show2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+    </TextView>
+    <Button
+        android:id="@+id/btnTimePickerDialog2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="end time"
+        android:onClick="eventOnClick"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Time"
+        android:id="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/show3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+    </TextView>
+    
+
 
     <RelativeLayout
         android:layout_width="match_parent"

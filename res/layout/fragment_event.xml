@@ -3,14 +3,24 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-
-    <Button
-        android:id="@+id/add_event"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add" 
-        android:onClick="AddEvents"/>
-
+	<TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    	<Button
+        	android:id="@+id/add_event"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Add" 
+        	android:onClick="AddEvents"/>
+    	<Button
+    	    android:id="@+id/Get_User"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Get User" 
+        	android:onClick="GetUser"
+    	    />
+	</TableRow>
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
