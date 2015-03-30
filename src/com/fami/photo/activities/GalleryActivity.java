@@ -79,7 +79,7 @@ public class GalleryActivity extends BaseActivity implements AdapterView.OnItemC
     private void initGalleryView() {
         galleryAdapter = new GalleryAdapter(getApplicationContext());
         galleryGridView.setAdapter(galleryAdapter);
-        //galleryGridView.setOnItemClickListener(this);
+        galleryGridView.setOnItemClickListener(this);
     }
 
     @Override
