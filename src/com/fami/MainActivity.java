@@ -61,7 +61,6 @@ public class MainActivity extends BaseActivity{
         		finish();
                 break;
             case R.id.todolist:
-                progressDialog.show();
                 Intent intent = new Intent(this, TodolistActivity.class);
                 startActivity(intent);
                 finish();
@@ -69,18 +68,15 @@ public class MainActivity extends BaseActivity{
             case R.id.sign_up:
             	break;
             case R.id.album:
-            	progressDialog.show();
             	startGalleryActivity();
             	finish();
                 break;
             case R.id.location:
-            	progressDialog.show();
             	Intent locIntent = new Intent(this, MapActivity.class);
             	startActivity(locIntent);
                 finish();
                 break;
             case R.id.event:
-            	progressDialog.show();
             	Intent eventIntent = new Intent(this, EventListActivity.class);
             	startActivity(eventIntent);
                 finish();

@@ -50,7 +50,6 @@
                 android:text="+" />
         </TableRow>
     </TableLayout>
-
     <ListView
         android:id="@+id/todolist_todo"
         android:layout_width="match_parent"

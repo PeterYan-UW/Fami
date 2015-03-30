@@ -1,21 +1,16 @@
 package com.fami.setting;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fami.MainActivity;
 import com.fami.R;
-import com.fami.user.helper.ApplicationSingleton;
 import com.fami.user.helper.DataHolder;
 import com.fami.user.utils.DialogUtils;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fami.R.id;
-import com.quickblox.chat.QBChatService;
-import com.quickblox.chat.model.QBDialog;
-import com.quickblox.chat.model.QBDialogType;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.customobjects.QBCustomObjects;
-import com.quickblox.customobjects.model.QBCustomObject;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 

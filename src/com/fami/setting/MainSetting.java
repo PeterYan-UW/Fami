@@ -1,7 +1,23 @@
 package com.fami.setting;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import com.fami.MainActivity;
 import com.fami.R;
 import com.fami.family.AddMemberActivity;
+import com.fami.user.Member;
+import com.fami.user.activities.LogInActivity;
+import com.fami.user.helper.ApplicationSingleton;
+import com.fami.user.helper.DataHolder;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.chat.model.QBDialog;
+import com.quickblox.chat.model.QBDialogType;
+import com.quickblox.core.QBEntityCallbackImpl;
+import com.quickblox.core.request.QBRequestGetBuilder;
+import com.quickblox.core.request.QBRequestUpdateBuilder;
+import com.quickblox.customobjects.QBCustomObjects;
+import com.quickblox.customobjects.model.QBCustomObject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -50,7 +66,7 @@ public class MainSetting extends FragmentActivity {
 	        	leavefami.setPositiveButton("LEAVE", new DialogInterface.OnClickListener() {
         			@Override
         			public void onClick(DialogInterface dialogInterface, int i) {
-        				Log.v("leave fami","leave fami");
+        				LeaveFami();
         			}
         		});
 	        	leavefami.setNegativeButton("Cancel",null);
@@ -58,4 +74,72 @@ public class MainSetting extends FragmentActivity {
 	            break;   	
         }
     }
+	protected void LeaveFami() {
+		// Get group dialog
+        //
+        QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        requestBuilder.eq("_id", DataHolder.getDataHolder().getChatRoom());
+     
+		QBChatService.getChatDialogs(QBDialogType.GROUP, requestBuilder, new QBEntityCallbackImpl<ArrayList<QBDialog>>(){
+			@Override
+			public void onSuccess(java.util.ArrayList<QBDialog> result, Bundle params) {
+				QBDialog dialog = result.get(0);
+				ArrayList<Integer> users = dialog.getOccupants();
+				for(int i=0; i<users.size(); i++){
+					if (users.get(i)==DataHolder.getDataHolder().getSignInUserId()){
+						users.remove(i);
+					}
+				}
+
+                QBRequestUpdateBuilder request = new QBRequestUpdateBuilder();
+                request.push("occupants_ids", users);
+				QBChatService.getInstance().getGroupChatManager().updateDialog(dialog, request , new QBEntityCallbackImpl<QBDialog>() {
+                    @Override
+                    public void onSuccess(QBDialog dialog, Bundle args) {
+                    	leaveUserFami();
+                    }
+
+                    @Override
+                    public void onError(List<String> errors) {
+                    }
+                });
+			};
+		});
+		
+	}
+	
+    private void leaveUserFami(){
+    	QBRequestGetBuilder requestBuilder = new QBRequestGetBuilder();
+        requestBuilder.ctn("dialog_id", DataHolder.getDataHolder().getChatRoom());  
+    	QBCustomObjects.getObjects("Fami", requestBuilder, new QBEntityCallbackImpl<ArrayList<QBCustomObject>>(){
+    		@Override
+    	    public void onSuccess(ArrayList<QBCustomObject> result, Bundle bundle) {
+    			QBCustomObject family = result.get(0);
+    			QBRequestUpdateBuilder request = new QBRequestUpdateBuilder();
+    			ArrayList<String> member_ids = (ArrayList<String>) family.getFields().get("member_id");
+
+				for(int i=0; i<member_ids.size(); i++){
+					if (Integer.valueOf(member_ids.get(i))==DataHolder.getDataHolder().getSignInUserId()){
+						member_ids.remove(i);
+					}
+				}
+    			Log.v("member id are: ", member_ids.toString());
+    	        request.push("member_id", member_ids);
+    	    	QBCustomObjects.updateObject(family, request, new QBEntityCallbackImpl<QBCustomObject>() {
+    	    	    @Override
+    	    	    public void onSuccess(QBCustomObject createdObject, Bundle bundle) {
+    	    	            Intent i = new Intent(MainSetting.this,LogInActivity.class);
+    	    	            startActivity(i);
+    	    	            finish();
+    	    	    }
+    	    	 
+    	    	    @Override
+    	    	    public void onError(List<String> errors) {
+    	    	 
+    	    	    }
+    	    	});
+    		}
+    	});
+    	
+	}
 }
