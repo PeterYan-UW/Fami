@@ -93,7 +93,7 @@ public class EventListActivity<SettingActivity> extends FragmentActivity {
 				break;
 			}	
 		}
-		
+
 		final int Task_year = Integer.parseInt(num[0]);
 		final int Task_month = Integer.parseInt(num[1]);
 		final int Task_day = Integer.parseInt(num[2]);
@@ -160,6 +160,7 @@ public class EventListActivity<SettingActivity> extends FragmentActivity {
 	    });
 	 
 	    builder.setNegativeButton("No",null);
+	    builder.show();
 		
 	}
 	protected void setEventAdapter(ArrayList<QBCustomObject> customObjects) {
