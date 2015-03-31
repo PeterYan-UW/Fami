@@ -59,6 +59,24 @@ public class EventListActivity<SettingActivity> extends FragmentActivity {
 		});
 	}
 	public void onAddtoCalender(View view) {
+		String user = "";
+        Cursor userCursor = getContentResolver().query(Uri.parse(calanderURL), null,
+                null, null, null);
+        if(userCursor.getCount() > 0){
+            userCursor.moveToFirst();
+            user = userCursor.getString(userCursor.getColumnIndex("_id"));
+
+        }
+        
+        if (user == ""){
+            AlertDialog.Builder check = new AlertDialog.Builder(this);
+    	    check.setTitle("Confirm");
+    	    check.setMessage("Get User please!");
+    	    check.setPositiveButton("Ok", null);
+    	    check.show();
+    	    return;
+        }
+        
 		View v = (View) view.getParent();
 		TextView EventName = (TextView) v.findViewById(R.id.event_name);
 		final String event_name = EventName.getText().toString();
@@ -163,6 +181,7 @@ public class EventListActivity<SettingActivity> extends FragmentActivity {
 	    builder.show();
 		
 	}
+	
 	protected void setEventAdapter(ArrayList<QBCustomObject> customObjects) {
 		ArrayList<QBCustomObject> event_item = new ArrayList<QBCustomObject>();
 		for (QBCustomObject item : customObjects){
